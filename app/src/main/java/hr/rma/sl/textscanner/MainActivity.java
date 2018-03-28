@@ -2,6 +2,8 @@ package hr.rma.sl.textscanner;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -35,6 +37,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     //Bitmap bitmap;
     final int REQUEST_TAKE_PHOTO = 1;
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 // Ensure that there's a camera activity to handle the intent
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     // Create the File where the photo should go
-
+                    List<ResolveInfo> resolvedIntentActivities = getApplicationContext().getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
                     try {
                         photoFile = createImageFile();
                     } catch (IOException ex) {
@@ -69,43 +73,13 @@ public class MainActivity extends AppCompatActivity {
                         photoURI = FileProvider.getUriForFile(getApplicationContext(),
                                 "hr.rma.fileprovider",
                                 photoFile);
+                        for (ResolveInfo resolvedIntentInfo : resolvedIntentActivities) {
+                            String packageName = resolvedIntentInfo.activityInfo.packageName;
+                            getApplicationContext().grantUriPermission(packageName, photoURI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        }
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
                         setResult(RESULT_OK, takePictureIntent);
-                        //Bitmap bitmap = null;
-                            /* final InputStream imageStream;
-                             try {
-                                 imageStream = getContentResolver().openInputStream(photoURI);
-                                 if(imageStream != null){
-                                     bitmap = BitmapFactory.decodeStream(imageStream);
-                                 }
-                             } catch (FileNotFoundException e) {
-                                 e.printStackTrace();
-                             }
-                             //try {
-                                 //ShareCompat.IntentBuilder intentBuilder = ShareCompat.IntentBuilder.from(MainActivity.this).addStream(sharedFileUri);
-                                 //Intent chooserIntent = intentBuilder.createChooserIntent();
-                                 //startActivity(chooserIntent);
-                                 //bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), photoURI);
-                                 //File imgFile = new  File("storage/emulated/0/Android/data/Pictures/JPEG_20180322_175224_457744141.jpg");
-                                 //bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                                 Log.d("tag" ,"Bitmap" + photoURI + "abs" + photoFile.getAbsolutePath() + "" +photoFile.getPath());
-                             /*}catch (IOException e) {
-                                 e.printStackTrace();
-                             }*/
-                             /*if(bitmap != null) {
-                                 TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-                                 Frame imageFrame = new Frame.Builder().setBitmap(bitmap).build();
-                                 String imageText = "";
-                                 SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
-                                 Log.d("tag" ,"Bitmapfsd" + bitmap.toString()+ " " +textBlocks);
-                                 for (int i = 0; i < textBlocks.size(); i++) {
-                                     TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
-                                     imageText = textBlock.getValue();                   // return string
-                                     myText.setText(imageText);
-                                     Log.d("tag", "Ovo je" + imageText);
-                                 }
-                             }*/
                     }
                 }
 
@@ -163,30 +137,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("tag", "dfg2");
             Uri noviURI = Uri.fromFile(photoFile);
             Bitmap bitmap = null;
-
-
             Glide.with(getApplicationContext()).load(noviURI).into(target2);
-            //OVO RADI!!!!!!!!!!!!!!!
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), noviURI);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            /*
-            if(bitmap != null) {
-                TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-                Frame imageFrame = new Frame.Builder().setBitmap(bitmap).build();
-                String imageText = "";
-                SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
-                Log.d("tag" ,"Bitmapfsd" + bitmap.toString()+ " " +textBlocks);
-                for (int i = 0; i < textBlocks.size(); i++) {
-                    TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
-                    imageText = textBlock.getValue();                   // return string
-                    myText.setText(imageText);
-                    Log.d("tag", "Ovo je" + imageText);
-                }
-            }*/
-            Log.d("tag", noviURI.toString()+" gs "+ bitmap.toString());
         }
     }
 

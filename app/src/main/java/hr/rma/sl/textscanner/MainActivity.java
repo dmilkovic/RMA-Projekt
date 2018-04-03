@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             // do something with the bitmap
             // for demonstration purposes, let's set it to an imageview
             if(bitmap != null) {
+                myText.setText("");
                 TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
                 Frame imageFrame = new Frame.Builder().setBitmap(bitmap.getBitmap()).build();
                 String imageText = "";
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < textBlocks.size(); i++) {
                     TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
                     imageText = textBlock.getValue();                   // return string
-                    myText.setText(imageText);
+                    myText.append(imageText);
                     Log.d("tag", "Ovo je" + imageText);
                 }
             }

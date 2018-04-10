@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TextScanner</string>
+    <string name="title_activity_share_text">ShareText</string>
 </resources>

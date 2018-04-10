@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     TextView myText;
     Uri photoURI = null;
     File photoFile = null;
+    public static final String EXTRA_MESSAGE = "hr.rma.textscanner.MESSAGE";
     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
                     imageText = textBlock.getValue();                   // return string
                     myText.append(imageText);
                     Log.d("tag", "Ovo je" + imageText);
+                    Intent intent = new Intent(MainActivity.this, ShareText.class);
+                    intent.putExtra(EXTRA_MESSAGE, imageText);
+                    startActivity(intent);
                 }
             }
         }

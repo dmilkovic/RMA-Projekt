@@ -1,5 +1,6 @@
 package hr.rma.sl.textscanner;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,7 +12,9 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     //Bitmap bitmap;
     final int REQUEST_TAKE_PHOTO = 1;
     //final int RESULT_OK = 0;
+    public static boolean storage_flag;
+    public static final int EXTERNAL_MEMORY = 2;
     TextView myText;
     Uri photoURI = null;
     File photoFile = null;
@@ -55,37 +60,45 @@ public class MainActivity extends AppCompatActivity {
         ImageButton camButton = findViewById(R.id.camera_button);
         myText = (TextView) findViewById(R.id.text_view);
         //bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sdf);
-
         camButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
-                // Ensure that there's a camera activity to handle the intent
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    // Create the File where the photo should go
-                    List<ResolveInfo> resolvedIntentActivities = getApplicationContext().getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
-                    try {
-                        photoFile = createImageFile();
-                    } catch (IOException ex) {
-                        // Error occurred while creating the File
-                    }
-                    // Continue only if the File was successfully created
-                    if (photoFile != null) {
-                        photoURI = FileProvider.getUriForFile(getApplicationContext(),
-                                "hr.rma.fileprovider",
-                                photoFile);
-                        for (ResolveInfo resolvedIntentInfo : resolvedIntentActivities) {
-                            String packageName = resolvedIntentInfo.activityInfo.packageName;
-                            getApplicationContext().grantUriPermission(packageName, photoURI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                {
+                    requestStoragePermission();
+                }else{
+                    // Ensure that there's a camera activity to handle the intent
+                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                        // Create the File where the photo should go
+                        List<ResolveInfo> resolvedIntentActivities = getApplicationContext().getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
+                        try {
+                            photoFile = createImageFile();
+                        } catch (IOException ex) {
+                            // Error occurred while creating the File
                         }
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                        startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-                        setResult(RESULT_OK, takePictureIntent);
+                        // Continue only if the File was successfully created
+                        if (photoFile != null) {
+                            photoURI = FileProvider.getUriForFile(getApplicationContext(),
+                                    "hr.rma.fileprovider",
+                                    photoFile);
+                            for (ResolveInfo resolvedIntentInfo : resolvedIntentActivities) {
+                                String packageName = resolvedIntentInfo.activityInfo.packageName;
+                                getApplicationContext().grantUriPermission(packageName, photoURI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            }
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                            setResult(RESULT_OK, takePictureIntent);
+                        }
                     }
                 }
-
             }
         });
+    }
+
+    private static void takePicture()
+    {
+
     }
 
     String mCurrentPhotoPath;
@@ -115,17 +128,19 @@ public class MainActivity extends AppCompatActivity {
                 TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
                 Frame imageFrame = new Frame.Builder().setBitmap(bitmap.getBitmap()).build();
                 String imageText = "";
+                String fullText = "";
                 SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
                 Log.d("tag" ,"Bitmapfsd" + bitmap.toString()+ " " +textBlocks);
                 for (int i = 0; i < textBlocks.size(); i++) {
                     TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
                     imageText = textBlock.getValue();                   // return string
                     myText.append(imageText);
+                    fullText += imageText;
                     Log.d("tag", "Ovo je" + imageText);
-                    Intent intent = new Intent(MainActivity.this, ShareText.class);
-                    intent.putExtra(EXTRA_MESSAGE, imageText);
-                    startActivity(intent);
                 }
+                Intent intent = new Intent(MainActivity.this, ShareText.class);
+                intent.putExtra(EXTRA_MESSAGE, fullText);
+                startActivity(intent);
             }
         }
         @Override
@@ -154,4 +169,36 @@ public class MainActivity extends AppCompatActivity {
         this.sendBroadcast(mediaScanIntent);
     }
 
+
+    //check for camera permission
+    protected void requestStoragePermission() {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_MEMORY);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case EXTERNAL_MEMORY: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+                    Toast storageEnable = Toast.makeText(getApplicationContext(), "Please enable storage", Toast.LENGTH_LONG);
+                    storageEnable.show();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+    // end of check permission
 }

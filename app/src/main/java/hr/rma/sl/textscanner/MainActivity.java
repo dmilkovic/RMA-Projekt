@@ -37,6 +37,8 @@ import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int EXTERNAL_MEMORY = 2;
     TextView myText;
     Uri photoURI = null;
+    String imageFileName;
     File photoFile = null;
     public static final String EXTRA_MESSAGE = "hr.rma.textscanner.MESSAGE";
     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -105,14 +108,13 @@ public class MainActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
@@ -122,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onResourceReady(BitmapDrawable bitmap, Transition<? super BitmapDrawable> transition) {
             // do something with the bitmap
-            // for demonstration purposes, let's set it to an imageview
             if(bitmap != null) {
                 myText.setText("");
                 TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
@@ -154,7 +155,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("tag", "dfg1");
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Log.d("tag", "dfg2");
+            try {
+                galleryAddPic();
+                Log.d("pic", "Dobros");
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.d("pic", "Nije dobro");
+            }
+            Log.d("tag", "dfg2" + mCurrentPhotoPath);
             Uri noviURI = Uri.fromFile(photoFile);
             Bitmap bitmap = null;
             Glide.with(getApplicationContext()).load(noviURI).into(target2);
@@ -162,11 +170,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void galleryAddPic() throws IOException {
+        Uri contentUri = Uri.fromFile(photoFile);
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
+        if (mediaScanIntent.resolveActivity(getApplication().getPackageManager()) != null) {
+            sendBroadcast(mediaScanIntent);
+            Log.d("pic", "Dobro");
+        }else{
+            // "Rucno" dodavanje u MediaStore:
+            System.out.println("***** There is no app which would handle this intent. Updating MediaStore manually...");
+            try {
+                MediaStore.Images.Media.insertImage(
+                        getApplication().getContentResolver(), String.valueOf(photoFile),
+                        imageFileName, null);
+                getApplication().sendBroadcast(new Intent(
+                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                        contentUri));
+            } catch (FileNotFoundException e) {
+                System.out.println("***** Error updating MediaStore manually...");
+            }
+        }
+
     }
 
 
@@ -181,12 +205,10 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case EXTERNAL_MEMORY: {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 takePicture();
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-
                 } else {
                     Toast storageEnable = Toast.makeText(getApplicationContext(), "Please enable storage", Toast.LENGTH_LONG);
                     storageEnable.show();
@@ -195,9 +217,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request.
         }
     }
     // end of check permission

@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class ShareText extends AppCompatActivity {
@@ -14,7 +15,7 @@ public class ShareText extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_text);
-        TextView shareText = findViewById(R.id.shareText);
+        final EditText shareText = findViewById(R.id.shareText);
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
@@ -32,7 +33,7 @@ public class ShareText extends AppCompatActivity {
             public void onClick(View view) {
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-                String shareBody = message;
+                String shareBody = shareText.getText().toString();
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);

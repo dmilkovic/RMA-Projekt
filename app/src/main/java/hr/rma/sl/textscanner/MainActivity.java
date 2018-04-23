@@ -47,6 +47,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     //Bitmap bitmap;
     final int REQUEST_TAKE_PHOTO = 1;
+    final int PICK_IMAGE_REQUEST = 2;
     //final int RESULT_OK = 0;
     public static boolean storage_flag;
     public static final int EXTERNAL_MEMORY = 2;
@@ -55,12 +56,15 @@ public class MainActivity extends AppCompatActivity {
     String imageFileName;
     File photoFile = null;
     public static final String EXTRA_MESSAGE = "hr.rma.textscanner.MESSAGE";
-    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ImageButton camButton = findViewById(R.id.camera_button);
+        ImageButton galleryButton = findViewById(R.id.gallery_button);
+
         myText = (TextView) findViewById(R.id.text_view);
         //bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sdf);
         camButton.setOnClickListener(new View.OnClickListener()
@@ -75,10 +79,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        galleryButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                   chooseFromGallery();
+            }
+        });
     }
 
     private void takePicture()
     {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
@@ -102,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
                 setResult(RESULT_OK, takePictureIntent);
             }
         }
+    }
+
+    private void chooseFromGallery() {
+        Intent intent = new Intent();
+        // Show only images, no videos or anything else
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        // Always show the chooser (if there are multiple options available)
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
     String mCurrentPhotoPath;
@@ -166,7 +187,10 @@ public class MainActivity extends AppCompatActivity {
             Uri noviURI = Uri.fromFile(photoFile);
             Bitmap bitmap = null;
             Glide.with(getApplicationContext()).load(noviURI).into(target2);
-        }
+        }else if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            Uri uri = data.getData();
+            Glide.with(getApplicationContext()).load(uri).into(target2);
+            }
     }
 
     private void galleryAddPic() throws IOException {

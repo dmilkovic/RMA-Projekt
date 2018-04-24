@@ -37,9 +37,8 @@
         <activity
             android:name=".ShareText"
             android:label="@string/title_activity_share_text"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

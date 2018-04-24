@@ -2,4 +2,13 @@
     <string name="app_name">TextScanner</string>
     <string name="title_activity_share_text">ShareText</string>
     <string name="send_to">Send to:</string>
+    <string name="share_text">Share Text</string>
+    <string name="iksica">Documents</string>
+    <string name="bills">Bills</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

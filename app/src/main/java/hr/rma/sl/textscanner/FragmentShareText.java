@@ -64,7 +64,7 @@ public class FragmentShareText extends Fragment {
     public static final String EXTRA_MESSAGE = "hr.rma.textscanner.MESSAGE";
     private FragmentAdapter mFragmentAdapter;
     private ViewPager mViewPager;
-
+    private OCR ocr;
     public FragmentShareText() {
         // Required empty public constructor
     }
@@ -78,16 +78,25 @@ public class FragmentShareText extends Fragment {
         ImageButton camButton = rootView.findViewById(R.id.camera_button);
         ImageButton galleryButton = rootView.findViewById(R.id.galleryButton);
         fab = (FloatingActionButton)rootView.findViewById(R.id.fab);
+        //ocr = new OCR(this.getActivity());
 
         camButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
+                //OCR ocr = new OCR(getActivity());
                 if(ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                 {
                     requestStoragePermission();
                 }else{
+                    //OCR ocr1 = new OCR(getActivity());
+                   // shareText.append(ocr.scanCameraImage());
                     takePicture();
+                 //   Intent intent = getIntent();
+                 //   final String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+
+                    // Capture the layout's TextView and set the string as its text
+                    //shareText.setText(message);
                 }
             }
         });
@@ -95,6 +104,7 @@ public class FragmentShareText extends Fragment {
         galleryButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                //shareText.append(ocr.scanGalleryImage());
                 chooseFromGallery();
             }
         });
@@ -146,7 +156,7 @@ public class FragmentShareText extends Fragment {
         return rootView;
     }
 
-    //upali kameru i uslikaj
+   //upali kameru i uslikaj
     private void takePicture()
     {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -191,11 +201,11 @@ public class FragmentShareText extends Fragment {
         File storageDir = getActivity().getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+            ".jpg",         /* suffix */
+               storageDir      /* directory */
         );
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
+       mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
@@ -223,7 +233,7 @@ public class FragmentShareText extends Fragment {
              //   Intent intent = new Intent(getActivity(), ShareText.class);
              //   intent.putExtra(EXTRA_MESSAGE, fullText);
              //   startActivity(intent);*/
-            }
+           }
         }
         @Override
         public void getSize(SizeReadyCallback cb) {
@@ -301,7 +311,7 @@ public class FragmentShareText extends Fragment {
                 return;
             }
         }
+        // end of check permission
     }
-    // end of check permission
 
 }

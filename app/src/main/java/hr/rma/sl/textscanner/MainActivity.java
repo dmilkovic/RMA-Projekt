@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-    private void takePicture()
+    /*private void takePicture()
     {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -155,11 +155,11 @@ public class MainActivity extends AppCompatActivity{
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+             //   ".jpg",         /* suffix */
+            //    storageDir      /* directory */
+        //);
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
+       /* mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
@@ -265,5 +265,5 @@ public class MainActivity extends AppCompatActivity{
             }
         }
     }
-    // end of check permission
+    // end of check permission*/
 }

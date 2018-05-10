@@ -37,7 +37,7 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 public class OCR extends AppCompatActivity{
-    /*
+
     Activity currentActivity;
     final int REQUEST_TAKE_PHOTO = 1;
     final int PICK_IMAGE_REQUEST = 2;
@@ -170,7 +170,7 @@ public class OCR extends AppCompatActivity{
         }else if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             Uri uri = data.getData();
             Glide.with(currentActivity.getApplicationContext()).load(uri).into(target2);
-        }`
+        }
     }
 
     private void galleryAddPic() throws IOException {
@@ -223,5 +223,5 @@ public class OCR extends AppCompatActivity{
         }
     }
     // end of check permission
-    */
+
 }

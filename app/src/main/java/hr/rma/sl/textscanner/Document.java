@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
         import java.util.Map;
 
@@ -120,5 +121,19 @@ public class Document {
         sb.append("Document number="+getDocumentNumber()+"\n");
         sb.append("OIB="+getoib()+"\n");
         return sb.toString();
+    }
+
+    public HashMap<String, String> createHashMap(){
+        HashMap<String, String> dokument = new HashMap<>();
+
+        // adding each child node to HashMap key => value
+        dokument.put("id", this.getId());
+        dokument.put("name", "Name: " + this.getName());
+        dokument.put("surname", "Surname: " + this.getSurname());
+        dokument.put("birthday","Birthday: " + this.getBirthday());
+        dokument.put("address", "Address: " + this.getAddress());
+        dokument.put("document number", "Document number: " + this.getDocumentNumber());
+        dokument.put("OIB", "OIB: " + this.getoib());
+        return dokument;
     }
 }

@@ -73,8 +73,8 @@ public class FragmentShareText extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        saveButton = getActivity().findViewById(R.id.saveButton);
-        saveButton.setVisibility(View.INVISIBLE);
+     //   saveButton = getActivity().findViewById(R.id.saveButton);
+     //   saveButton.setVisibility(View.INVISIBLE);
         View rootView = inflater.inflate(R.layout.fragment_share_text, container, false);
         // Inflate the layout for this fragment
         shareText = rootView.findViewById(R.id.shareText);
@@ -160,7 +160,7 @@ public class FragmentShareText extends Fragment {
         return rootView;
     }
 
-    @Override
+/*    @Override
     public void onResume()
     {
         super.onResume();
@@ -175,7 +175,7 @@ public class FragmentShareText extends Fragment {
         super.onPause();
         saveButton.setVisibility(View.INVISIBLE);
         Log.d("tag", "Makni save");
-    }
+    }*/
    //upali kameru i uslikaj
     private void takePicture()
     {

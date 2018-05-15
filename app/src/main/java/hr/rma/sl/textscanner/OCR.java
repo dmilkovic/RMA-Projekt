@@ -50,6 +50,7 @@ public class OCR extends AppCompatActivity{
     File photoFile = null;
     public static final String EXTRA_MESSAGE = "hr.rma.textscanner.MESSAGE";
 
+    //probaj poslati context a ne activity
     public OCR(Activity current){
         this.currentActivity = current;
     }

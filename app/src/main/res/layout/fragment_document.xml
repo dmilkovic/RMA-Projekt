@@ -9,42 +9,50 @@
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+
     </ListView>
 
     <EditText
         android:id="@+id/name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent" />
+        android:textColor="@color/colorAccent"
+        android:inputType="text"/>
 
     <EditText
         android:id="@+id/surname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#5d5d5d"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:inputType="text"/>
     <EditText
         android:id="@+id/birthday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#5d5d5d"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:inputType="text"/>
     <EditText
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#5d5d5d"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:inputType="text"/>
     <EditText
         android:id="@+id/OIB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#5d5d5d"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:inputType="text"/>
     <EditText
         android:id="@+id/document_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#5d5d5d"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:inputType="text"/>
+
 </LinearLayout>

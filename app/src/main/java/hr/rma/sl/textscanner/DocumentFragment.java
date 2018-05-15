@@ -3,11 +3,14 @@ package hr.rma.sl.textscanner;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -38,21 +41,29 @@ import java.util.List;
 public class DocumentFragment extends ListFragment{
     private String TAG = MainActivity.class.getSimpleName();
     private ListView lv;
+    private ImageButton saveButton;
     ArrayList<HashMap<String, String>> contactList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_document, container, false);
+
         contactList = new ArrayList<>();
         lv = (ListView) view.findViewById(android.R.id.list);
+        saveButton = getActivity().findViewById(R.id.saveButton);
+       saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //when play is clicked show stop button and hide play button
+               Log.d("tag", "uspio");
+            }
+        });
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<Document> myObjects = null;
@@ -113,8 +124,25 @@ public class DocumentFragment extends ListFragment{
                 Toast.makeText(getActivity(), "Item: " , Toast.LENGTH_SHORT).show();
             }
         });
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowCustomEnabled(true);
     }
 
+  /*  @Override
+    public void onResume()
+    {
+        super.onResume();
+        saveButton.setVisibility(View.VISIBLE);
+        Log.d("tag", "Stavi save");
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        saveButton.setVisibility(View.INVISIBLE);
+        Log.d("tag", "Stavi save");
+    }
+*/
     //upravljanje json-om
     private byte[] read(Context context, String fileName) {
         try {

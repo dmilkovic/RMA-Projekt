@@ -2,13 +2,14 @@ package hr.rma.sl.textscanner;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
         import java.util.Map;
 
-public class Document {
+public class Document implements Serializable{
     private String id;
     private String name;
     private String surname;

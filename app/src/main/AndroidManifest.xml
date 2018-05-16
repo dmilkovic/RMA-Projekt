@@ -38,8 +38,16 @@
             android:name=".ShareText"
             android:label="@string/title_activity_share_text"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EditDocument"
+            android:label="@string/title_activity_edit_document"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="hr.rma.sl.textscanner.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

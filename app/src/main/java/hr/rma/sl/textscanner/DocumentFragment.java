@@ -1,9 +1,11 @@
 package hr.rma.sl.textscanner;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -11,12 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,16 +38,26 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 
 public class DocumentFragment extends ListFragment {
     private String TAG = MainActivity.class.getSimpleName();
     private ListView lv;
+    private List<Document> myObjects = null;
     private ImageButton saveButton, camButton;
+    private Button editButton;
+    private int int_identifier = 1;
+    private ObjectMapper objectMapper;
+    public Document changeDocument;
+    private SimpleAdapter adapter;
     ArrayList<HashMap<String, String>> contactList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,37 +65,52 @@ public class DocumentFragment extends ListFragment {
         contactList = new ArrayList<>();
         saveButton = view.findViewById(R.id.saveButton);
         camButton = view.findViewById(R.id.camera_button);
+        editButton = view.findViewById(R.id.editButton);
+        editButton.setClickable(true);
         lv = (ListView) view.findViewById(android.R.id.list);
-        saveButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                /// create();
-            }
-        });
-        //  saveButton = getActivity().findViewById(R.id.saveButton);
-       /*saveButton.setOnClickListener(new View.OnClickListener() {
+
+        saveButton = view.findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //when play is clicked show stop button and hide play button
-               Log.d("tag", "uspio");
+                try {
+                    String jsonInString = objectMapper.writeValueAsString(myObjects);
+                    create(getActivity(), jsonInString);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+                Log.d("tag", "uspio");
+            }
+        });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("tag", "Edit");
+            }
+        });
+    /*    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(), "Item: ", Toast.LENGTH_SHORT).show();
+                Log.d("tag", "click");
             }
         });*/
+
+
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
+        objectMapper = new ObjectMapper();
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            List<Document> myObjects = null;
             if (isFilePresent(getActivity(), "storage.json")) {
                 // String jsonString = read(getActivity(), "storage.json");
                 myObjects = objectMapper.readValue(read(getActivity(), "storage.json"), new TypeReference<List<Document>>() {
                 });
+
                 //do the json parsing here and do the rest of functionality of app
             } else {
                 boolean isFileCreated = create(getActivity(), "{}");
@@ -95,7 +125,7 @@ public class DocumentFragment extends ListFragment {
                     byte[] jsonData = new String(buffer, "UTF-8").getBytes();
                     //    ObjectMapper objectMapper = new ObjectMapper();
                     Log.d("tag", "tu sam");
-                    List<Document> myObjects1 = objectMapper.readValue(jsonData, new TypeReference<List<Document>>() {
+                    myObjects = objectMapper.readValue(jsonData, new TypeReference<List<Document>>() {
                     });
 
                     Document dokument = new Document();
@@ -103,8 +133,8 @@ public class DocumentFragment extends ListFragment {
                     dokument.setId("4");
                     dokument.setName("Zorro");
 
-                    myObjects1.add(dokument);
-                    String jsonInString = objectMapper.writeValueAsString(myObjects1);
+                    myObjects.add(dokument);
+                    String jsonInString = objectMapper.writeValueAsString(myObjects);
 
                     Log.d("tag1", "*****" + jsonInString);
                     create(getActivity(), jsonInString);
@@ -115,29 +145,36 @@ public class DocumentFragment extends ListFragment {
                     //show error or try again.
                 }
             }
-
             for (int i = 0; i < myObjects.size(); i++) {
                 contactList.add(myObjects.get(i).createHashMap());
-                Log.d("tag1", myObjects.get(i).toString());
+                Log.d("tag1", myObjects.toString());
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+        refreshAdapter();
 
 
-        ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), contactList,
+
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowCustomEnabled(true);
+    }
+    private void refreshAdapter(){
+        adapter = new SimpleAdapter(getActivity().getApplicationContext(), contactList,
                 R.layout.content_document_list, new String[]{"name", "surname", "birthday", "address", "OIB", "document number"},
                 new int[]{R.id.name, R.id.surname, R.id.birthday, R.id.address, R.id.OIB, R.id.document_number});
         lv.setAdapter(adapter);
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "Item: ", Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent appInfo = new Intent(getActivity(), EditDocument.class);
+                changeDocument = myObjects.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("doc", changeDocument);
+                appInfo.putExtras(bundle);
+                appInfo.putExtra("pos", position);
+                startActivityForResult(appInfo, int_identifier);
+                Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
             }
         });
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowCustomEnabled(true);
     }
 
 
@@ -169,7 +206,7 @@ public class DocumentFragment extends ListFragment {
         }
     }
 
-    private boolean create(Context context, String jsonString) {
+    private static boolean create(Context context, String jsonString) {
         String FILENAME = "storage.json";
         FileOutputStream fos;
         try {
@@ -186,7 +223,7 @@ public class DocumentFragment extends ListFragment {
             output = new BufferedWriter(new FileWriter(file));
             output.write(jsonString);
             output.close();
-            Toast.makeText(getActivity().getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
+           // Toast.makeText(getActivity().getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
             return true;
         } catch (FileNotFoundException e) {
             return false;
@@ -201,4 +238,46 @@ public class DocumentFragment extends ListFragment {
         return file.exists();
     }
 
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == int_identifier) {
+            if (resultCode == RESULT_OK) {
+
+              /*myObjects.set(position, changeDocument);
+                objectMapper = new ObjectMapper();
+                String jsonInString = null;*/
+                Bundle bundle = data.getExtras();
+                changeDocument = (Document)bundle.getSerializable("doc");
+                int position = data.getIntExtra("pos", 0);
+                myObjects.set(position, changeDocument);
+
+                String jsonInString = null;
+                try {
+                    jsonInString = objectMapper.writeValueAsString(myObjects);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+                Log.d("tag1", "*****" + jsonInString);
+                create(getActivity(), jsonInString);
+                contactList.clear();
+                for (int i = 0; i < myObjects.size(); i++) {
+                    contactList.add(myObjects.get(i).createHashMap());
+                    Log.d("tag1", myObjects.toString());
+                }
+                 Log.d("tag3", changeDocument.toString());
+            }
+            adapter.notifyDataSetChanged();
+        }
+    }
 }

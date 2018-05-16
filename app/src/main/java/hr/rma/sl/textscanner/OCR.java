@@ -2,6 +2,7 @@ package hr.rma.sl.textscanner;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -38,7 +39,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class OCR extends AppCompatActivity{
 
-    Activity currentActivity;
+    Context currentActivity;
     final int REQUEST_TAKE_PHOTO = 1;
     final int PICK_IMAGE_REQUEST = 2;
     //final int RESULT_OK = 0;
@@ -51,7 +52,7 @@ public class OCR extends AppCompatActivity{
     public static final String EXTRA_MESSAGE = "hr.rma.textscanner.MESSAGE";
 
     //probaj poslati context a ne activity
-    public OCR(Activity current){
+    public OCR(Context current){
         this.currentActivity = current;
     }
 
@@ -72,7 +73,7 @@ public class OCR extends AppCompatActivity{
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(currentActivity.getPackageManager()) != null) {
             // Create the File where the photo should go
-            List<ResolveInfo> resolvedIntentActivities = currentActivity.getApplicationContext().getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
+            List<ResolveInfo> resolvedIntentActivities = currentActivity.getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
@@ -80,7 +81,7 @@ public class OCR extends AppCompatActivity{
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                photoURI = FileProvider.getUriForFile(currentActivity.getApplicationContext(),
+                photoURI = FileProvider.getUriForFile(currentActivity,
                         "hr.rma.fileprovider",
                         photoFile);
                 for (ResolveInfo resolvedIntentInfo : resolvedIntentActivities) {
@@ -88,7 +89,7 @@ public class OCR extends AppCompatActivity{
                     currentActivity.grantUriPermission(packageName, photoURI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 }
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                ((Activity)currentActivity).startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
                 setResult(RESULT_OK, takePictureIntent);
             }
         }
@@ -100,7 +101,7 @@ public class OCR extends AppCompatActivity{
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         // Always show the chooser (if there are multiple options available)
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        ((Activity)currentActivity).startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
     String mCurrentPhotoPath;
@@ -122,6 +123,7 @@ public class OCR extends AppCompatActivity{
     private BaseTarget target2 = new BaseTarget<BitmapDrawable>() {
         @Override
         public void onResourceReady(BitmapDrawable bitmap, Transition<? super BitmapDrawable> transition) {
+            Log.d("photo", "glide");
             // do something with the bitmap
             if(bitmap != null) {
                 //shareText.setText("");
@@ -130,7 +132,7 @@ public class OCR extends AppCompatActivity{
                 String imageText = "";
                 String fullText = "";
                 SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
-                Log.d("tag" ,"Bitmapfsd" + bitmap.toString()+ " " +textBlocks);
+                Log.d("photo" ,"Bitmapfsd" + bitmap.toString()+ " " +textBlocks);
                 for (int i = 0; i < textBlocks.size(); i++) {
                     TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
                     imageText = textBlock.getValue();                   // return string
@@ -140,10 +142,11 @@ public class OCR extends AppCompatActivity{
                 }
               //  shareText.append(fullText);
                 //Trebat ce ti kasnije!!!!!****
-                 Intent intent = new Intent(currentActivity, FragmentShareText.class);
+                /* Intent intent = new Intent(currentActivity, FragmentShareText.class);
                  intent.putExtra(EXTRA_MESSAGE, fullText);
-                 startActivity(intent);
+                ((Activity)currentActivity).startActivity(intent);*/
                  scanResult = fullText;
+                 Log.d("tag", scanResult);
             }
         }
         @Override
@@ -170,7 +173,8 @@ public class OCR extends AppCompatActivity{
             Glide.with(currentActivity.getApplicationContext()).load(noviURI).into(target2);
         }else if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             Uri uri = data.getData();
-            Glide.with(currentActivity.getApplicationContext()).load(uri).into(target2);
+            Log.d("photo", "result");
+            Glide.with(currentActivity).load(uri).into(target2);
         }
     }
 
@@ -178,7 +182,7 @@ public class OCR extends AppCompatActivity{
         Uri contentUri = Uri.fromFile(photoFile);
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         mediaScanIntent.setData(contentUri);
-        if (mediaScanIntent.resolveActivity(currentActivity.getApplication().getPackageManager()) != null) {
+        if (mediaScanIntent.resolveActivity(currentActivity.getPackageManager()) != null) {
             currentActivity.sendBroadcast(mediaScanIntent);
             Log.d("pic", "Dobro");
         }else{
@@ -186,9 +190,9 @@ public class OCR extends AppCompatActivity{
             System.out.println("***** There is no app which would handle this intent. Updating MediaStore manually...");
             try {
                 MediaStore.Images.Media.insertImage(
-                        currentActivity.getApplication().getContentResolver(), String.valueOf(photoFile),
+                        currentActivity.getContentResolver(), String.valueOf(photoFile),
                         imageFileName, null);
-                currentActivity.getApplication().sendBroadcast(new Intent(
+                currentActivity.sendBroadcast(new Intent(
                         Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                         contentUri));
             } catch (FileNotFoundException e) {
@@ -200,7 +204,7 @@ public class OCR extends AppCompatActivity{
 
     //check for camera permission
     protected void requestStoragePermission() {
-        ActivityCompat.requestPermissions(currentActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_MEMORY);
+        ActivityCompat.requestPermissions((Activity) currentActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_MEMORY);
     }
 
     @Override

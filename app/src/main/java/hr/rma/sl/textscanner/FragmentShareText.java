@@ -2,6 +2,7 @@ package hr.rma.sl.textscanner;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -24,6 +25,8 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -76,42 +79,44 @@ public class FragmentShareText extends Fragment {
      //   saveButton = getActivity().findViewById(R.id.saveButton);
      //   saveButton.setVisibility(View.INVISIBLE);
         View rootView = inflater.inflate(R.layout.fragment_share_text, container, false);
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
         // Inflate the layout for this fragment
         shareText = rootView.findViewById(R.id.shareText);
         ImageButton camButton = rootView.findViewById(R.id.camera_button);
         ImageButton galleryButton = rootView.findViewById(R.id.galleryButton);
         fab = (FloatingActionButton)rootView.findViewById(R.id.fab);
-        //ocr = new OCR(this.getActivity());
-
+        //ocr = new OCR(this.getContext());
 
         camButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
-                //OCR ocr = new OCR(getActivity());
+
                 if(ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                 {
                     requestStoragePermission();
                 }else{
                     //OCR ocr1 = new OCR(getActivity());
-                   // shareText.append(ocr.scanCameraImage());
-                    takePicture();
+                 //   shareText.append(ocr.scanCameraImage());
+                   //ocr.scanCameraImage();
                  //   Intent intent = getIntent();
                  //   final String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
                     // Capture the layout's TextView and set the string as its text
                     //shareText.setText(message);
+                    takePicture();
                 }
             }
         });
 
-        galleryButton.setOnClickListener(new View.OnClickListener(){
+    /*    galleryButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //shareText.append(ocr.scanGalleryImage());
-                chooseFromGallery();
+               // ocr.scanGalleryImage();
             }
-        });
+        });*/
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,12 +131,12 @@ public class FragmentShareText extends Fragment {
             }
         });
 
-    /*    galleryButton.setOnClickListener(new View.OnClickListener(){
+    galleryButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                    chooseFromGallery();
             }
-        });*/
+        });
         // Get the Intent that started this activity and extract the string
      //   Intent intent = getIntent();
       //  final String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
@@ -160,24 +165,8 @@ public class FragmentShareText extends Fragment {
         return rootView;
     }
 
-/*    @Override
-    public void onResume()
-    {
-        super.onResume();
-        saveButton.setVisibility(View.VISIBLE);
-        Log.d("tag", "Makni save");
-
-    }
-
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        saveButton.setVisibility(View.INVISIBLE);
-        Log.d("tag", "Makni save");
-    }*/
    //upali kameru i uslikaj
-    private void takePicture()
+   private void takePicture()
     {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -221,11 +210,11 @@ public class FragmentShareText extends Fragment {
         File storageDir = getActivity().getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
-            ".jpg",         /* suffix */
-               storageDir      /* directory */
+         ".jpg",         /* suffix */
+                storageDir      /* directory */
         );
         // Save a file: path for use with ACTION_VIEW intents
-       mCurrentPhotoPath = image.getAbsolutePath();
+     mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
@@ -253,7 +242,7 @@ public class FragmentShareText extends Fragment {
              //   Intent intent = new Intent(getActivity(), ShareText.class);
              //   intent.putExtra(EXTRA_MESSAGE, fullText);
              //   startActivity(intent);*/
-           }
+          }
         }
         @Override
         public void getSize(SizeReadyCallback cb) {
@@ -333,5 +322,4 @@ public class FragmentShareText extends Fragment {
         }
         // end of check permission
     }
-
 }

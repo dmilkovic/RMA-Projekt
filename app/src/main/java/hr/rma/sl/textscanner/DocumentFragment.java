@@ -59,11 +59,16 @@ import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -342,6 +347,8 @@ public class DocumentFragment extends ListFragment {
         return image;
     }
 
+    //varijable za spremanje datuma
+    String birthday = null, expireDate = null;
     private BaseTarget target2 = new BaseTarget<BitmapDrawable>() {
         @Override
         public void onResourceReady(BitmapDrawable bitmap, Transition<? super BitmapDrawable> transition) {
@@ -366,6 +373,31 @@ public class DocumentFragment extends ListFragment {
                  //   Intent intent = new Intent(getActivity(), ShareText.class);
                  //   intent.putExtra(EXTRA_MESSAGE, fullText);
                  //   startActivity(intent);*/
+                //int nameStart = fullText.indexOf("CROATIA");
+              //  int nameEnd = fullText.indexOf("/") - 1;
+             //   String name = fullText.substring(nameStart, nameEnd);
+                fullText = fullText.replaceAll("HRV", "");
+                fullText = fullText.toLowerCase().replaceAll("osobna", "");
+                fullText = fullText.replaceAll("iskaznica", "");
+                fullText = fullText.replaceAll("identity", "");
+                fullText = fullText.replaceAll("card", "");
+                fullText = fullText.replaceAll("rh republic", "");
+                fullText = fullText.replaceAll("republika", "");
+                fullText = fullText.replaceAll("of", "");
+                fullText = fullText.replaceAll("hrvatska", "");
+                fullText = fullText.replaceAll("croatia", "");
+                fullText = fullText.replaceAll("citizenship", "");
+                fullText = fullText.replaceAll("datum rodenja", "");
+                fullText = fullText.replaceAll("potpis", "");
+                fullText = fullText.replaceAll("signatur", "");
+                fullText = fullText.replaceAll("broj", "");
+                fullText = fullText.replaceAll("number", "");
+                fullText = fullText.replaceAll("m/m", "");
+                fullText = fullText.replaceAll("ž/f", "");
+                fullText = fullText.replaceAll("\\s","");
+
+                getDates(fullText);
+                Log.d("ime", birthday + "***** " +expireDate);
             }
         }
         @Override
@@ -426,4 +458,56 @@ public class DocumentFragment extends ListFragment {
         }
         // end of check permission
     }
+
+    private void getDates(String fullText)
+    {
+        List<String> dates = new ArrayList<>();
+        int len = 11, i  = 0, cnt = 0;
+        while(len+i <= fullText.length()) {
+            String check = fullText.substring(i, len+i);
+            //   if(check.contains(s1)) cnt++;
+            String date1 = getDate(check);
+            //ima li string 11 znakova(koliko ima i datum
+            if(date1.length()==len)
+            {
+                dates.add(date1);
+                Log.d("ime", date1);
+            }
+            i++;
+        }
+        //usporedi datume i vidi koji je rođendan
+        try {
+            DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+            Date tempDate = null;
+            Date tempDate1 = null;
+            tempDate = format.parse(dates.get(0));
+            tempDate1 = format.parse(dates.get(1));
+            if(tempDate.before(tempDate1))
+            {
+                birthday = dates.get(0);
+                expireDate = dates.get(1);
+            }else{
+                birthday = dates.get(1);
+                expireDate = dates.get(0);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private  String getDate(String desc) {
+        int count=0;
+        String allMatches = new String();
+        //desc = "19.01.1998.";
+        //Matcher m = Pattern.compile("\\d\\d.\\d\\d.\\d\\d\\d\\d.").matcher(desc);
+        Matcher m = Pattern.compile("[0-9]{2}.[0-9]{2}.[0-9]{4}.").matcher(desc);
+
+        while (m.find()) {
+            allMatches = m.group();
+        }
+        return allMatches;
+    }
+
+
+
 }

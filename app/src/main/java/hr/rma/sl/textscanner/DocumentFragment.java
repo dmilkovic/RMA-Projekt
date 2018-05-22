@@ -364,28 +364,49 @@ public class DocumentFragment extends ListFragment {
                 String fullText = "";
                 SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
                 //Log.d("tag" ,"Bitmapfsd" + bitmap.toString()+ " " +textBlocks);
-                boolean surnameFlag = false, nameFlag = false;
-                for (int i = 0; i < textBlocks.size(); i++) {
+                boolean surnameFlag = false, nameFlag = false, nameFlag1 = false;
+                for (int i = 0; i < textBlocks.size(); i++)
+                {
                     TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
                     imageText = textBlock.getValue();                   // return string
                     // myText.append(imageText);
+                    if(imageText.contains("I0HRV") || imageText.contains("<")) continue;
+                   // if(imageText.contains("RH REPUBLIC REPUBLIKA OF HRVATSKA CROATIA")) continue;
+                   // imageText =  imageText.replaceAll("[a-z]", "");
                     fullText += imageText;
-
                     if(imageText.contains("Residence") || imageText.contains("identification")) side2Flag = true;
-
 
                     if(imageText.contains("REPUBLIC OF CROATIA"))
                     {
                         ime = imageText.substring(imageText.indexOf(("REPUBLIC OF CROATIA")) + "REPUBLIC OF CROATIA".length(),imageText.length());
                         surnameFlag = true;
                         continue;
+                        }
+                    if(imageText.contains("RH REPUBLIKA HRVATSKA"))
+                    {
+                        prezime = imageText.substring(imageText.indexOf(("RH REPUBLIKA HRVATSKA")) + "RH REPUBLIKA HRVATSKA".length(),imageText.length());
+                        continue;
                     }
-                    if(surnameFlag && !nameFlag)
+                    /*else if(imageText.contains("Ime/Name"))
+                    {
+                        nameFlag1 = true;
+                        continue;
+                    }
+
+                    if(nameFlag1)
+                    {
+                        ime = imageText;
+                        nameFlag1 = false;
+                        surnameFlag = true;
+                        continue;
+                    }*/
+
+                  /* if(surnameFlag && !nameFlag)
                     {
                         prezime = imageText;
                         nameFlag = true;
                         continue;
-                    }
+                    }*/
                     if(imageText.contains("M/M"))
                     {
                         spol = imageText.substring(imageText.indexOf("M/M"),imageText.indexOf("M/M")+3);
@@ -407,8 +428,35 @@ public class DocumentFragment extends ListFragment {
              //   String name = fullText.substring(nameStart, nameEnd);
              //   Log.d("ime", fullText);
                // ime = fullText.substring((fullText.indexOf("CROATIA")+7),fullText.indexOf("Ime/Name"));
-             /*   fullText = fullText.replaceAll("HRV", "");
-                fullText = fullText.replaceAll("OSOBNA", "");
+             //fullText = fullText.replaceAll("HRV", "");
+
+
+                if(side2Flag)
+                {
+                    getDates(fullText, "dateOfIssue");
+                   /* if(fullText.contains("Prebiv"))
+                    {
+                      //  if(fullText.indexOf("Prebiv") - 11 > -1) getDates((fullText.substring(fullText.indexOf("Prebiv") - 11, fullText.indexOf("Prebiv"))), "OIB");
+                        //if(fullText.contains("OIB/Personal identification number") || fullText.contains("OI8/Personal identification number") || fullText.contains("OIE/Personal identification number")|| fullText.contains("OIBPersonal identification number")) getDates(fullText.substring(fullText.indexOf("OIB/Personal identification number")+"OIB/Personal identification number".length(), fullText.length()), "OIB");
+                        getDates(fullText, "OIB");
+                    }*/
+                    getDates(fullText, "OIB");
+                    address = fullText.substring(fullText.indexOf("Residence")+"Residence".length(),fullText.indexOf("zdala"));
+                    Log.d("side2", fullText + "***" + dateOfIssue + side2Flag + "**OIB: " + OIB + "** adresa:" + address);
+                    //  Log.d("address", "adresa:" + address);
+                }
+                else{
+                    getDates(fullText, "date");
+                    //   ime = fullText.substring((fullText.indexOf(expireDate)+11), fullText.length());
+                    getDates(fullText, "documentnumber");
+                /*    fullText = fullText.replaceAll(birthday, "");
+                    fullText = fullText.replaceAll(expireDate, "");
+                    fullText = fullText.replaceAll(documentNumber, "");
+                    fullText = fullText.replaceAll(spol, "");*/
+                    Log.d("ime", fullText+ "\n **"+ birthday + "***** " +expireDate +"**"+ ime +" ** "+ prezime +" ** " + spol +"\n***" + documentNumber);
+                }
+
+              /*  fullText = fullText.replaceAll("OSOBNA", "");
                 fullText = fullText.replaceAll("ISKAZNICA", "");
 
                 fullText = fullText.replaceAll("REPUBLIC", "");
@@ -418,10 +466,33 @@ public class DocumentFragment extends ListFragment {
                 fullText = fullText.replaceAll("CARD", "");
                 fullText = fullText.replaceAll("HRVATSKA", "");
                 fullText = fullText.replaceAll("CROATIA", "");
-                fullText = fullText.replaceAll("Ime/Name", "");
+                fullText = fullText.replaceAll("\\bHRV\\b", "");
+                fullText = fullText.replaceAll("\\bRH\\b", "");
+                fullText = fullText.replaceAll("\\bOF\\b", "");
+                fullText = fullText.replaceAll("[a-z]", "");
+                fullText = fullText.replaceAll("/", "");
+              /*  fullText = fullText.replaceAll("Identity", "");
+                fullText = fullText.replaceAll("card", "");
+                fullText = fullText.replaceAll("citizenship", "");
+                fullText = fullText.replaceAll("rodenja", "");
+                fullText = fullText.replaceAll("rođenja", "");
+                fullText = fullText.replaceAll("Potpis", "");
+                fullText = fullText.replaceAll("Signature", "");
+                fullText = fullText.replaceAll("Broj", "");
+                fullText = fullText.replaceAll("number", "");
+                fullText = fullText.replaceAll("Date", "");
+                fullText = fullText.replaceAll("Datum", "");
+                fullText = fullText.replaceAll("birth", "");
+                fullText = fullText.replaceAll("expiry", "");
+                fullText = fullText.replaceAll("Broj", "");
+                fullText = fullText.replaceAll("Prezime", "");
+                fullText = fullText.replaceAll("Surname", "");
+                fullText = fullText.replaceAll("Spol", "");
+                fullText = fullText.replaceAll("Sex", "");
+       /*         fullText = fullText.replaceAll("Ime/Name", "");
                 fullText = fullText.replaceAll("Prezime/Surname", "");
                 fullText = fullText.replaceAll("Potpis/Signature", "");
-                fullText = fullText.replaceAll("Date of expiry", "");
+              //  fullText = fullText.replaceAll("Date of expiry", "");
                 //  fullText = fullText.replaceAll("of", "");
                 //    fullText = fullText.replaceAll("identity", "");
                 //   fullText = fullText.replaceAll("card", "");
@@ -434,30 +505,12 @@ public class DocumentFragment extends ListFragment {
                 fullText = fullText.replaceAll("m/m", "");
                 fullText = fullText.replaceAll("ž/f", "");*/
              //   fullText = fullText.replaceAll("\\s","");
-                if(side2Flag)
-                {
-                    getDates(fullText, "dateOfIssue");
-                    if(fullText.contains("Prebiv"))
-                    {
-                        if(fullText.indexOf("Prebiv") - 11 > -1) getDates((fullText.substring(fullText.indexOf("Prebiv") - 11, fullText.indexOf("Prebiv"))), "OIB");
-                        if(fullText.contains("OIB/Personal identification number")) getDates(fullText.substring(fullText.indexOf("OIB/Personal identification number")+"OIB/Personal identification number".length(), fullText.length()), "OIB");
-
-                    }
-                    address = fullText.substring(fullText.indexOf("Residence")+"Residence".length(),fullText.indexOf("zdala"));
-                    Log.d("side2", fullText + "***" + dateOfIssue + side2Flag + "**OIB: " + OIB + "** adresa:" + address);
-                  //  Log.d("address", "adresa:" + address);
-                }
-                else{
-                    getDates(fullText, "date");
-                 //   ime = fullText.substring((fullText.indexOf(expireDate)+11), fullText.length());
-                    getDates(fullText, "documentnumber");
-                    Log.d("ime", fullText+ "\n **"+ birthday + "***** " +expireDate + ime +" ** "+ prezime +" ** " + spol +"\n***" + documentNumber);
-                }
+             //   Log.d("ime", fullText+ "\n **"+ birthday + "***** " +expireDate +"**"+ ime +" ** "+ prezime +" ** " + spol +"\n***" + documentNumber);
             }
         }
         @Override
         public void getSize(SizeReadyCallback cb) {
-            cb.onSizeReady(1024, 720);
+            cb.onSizeReady(1440, 1080);
         }
         @Override
         public void removeCallback(SizeReadyCallback cb) {}
@@ -517,18 +570,24 @@ public class DocumentFragment extends ListFragment {
     private void getDates(String fullText, String type)
     {
         List<String> dates = new ArrayList<>();
-        int len = 11, i  = 0, cnt = 0;
+        int len = 10, i  = 0, cnt = 0;
         if(type.toLowerCase().equals("documentnumber")) len = 9;
         while(len+i <= fullText.length()) {
             String check = fullText.substring(i, len + i);
             //   if(check.contains(s1)) cnt++;
             String date1 = new String();
-            if (type.equals("date")){
+           /* if (type.equals("date")){
                 date1 = getDate(check, "date");
-                if(date1.length()==len)
+                if(date1.length()==10)
                 {
                     dates.add(date1);
                     Log.d("ime", date1);
+                }*/
+            if (type.equals("date")) {
+                date1 = getDate(check, "date");
+                if (getDate(check, "date").length() == 10) {
+                 //   Log.d("side2", "datum6" + getDate(check, "date") + dates.toString());
+                    dates.add(date1);
                 }
             }
             else if(type.equals("documentnumber"))
@@ -538,7 +597,7 @@ public class DocumentFragment extends ListFragment {
                     return;
                 }
             }else if(type.equals("dateOfIssue")){
-                if(getDate(check, "date").length() == 11)
+                if(getDate(check, "date").length() == 10)
                 {
                     Log.d("side2", "datum" + getDate(check, "date"));
                     dateOfIssue = getDate(check, "date");
@@ -558,15 +617,18 @@ public class DocumentFragment extends ListFragment {
             //ima li string 11 znakova(koliko ima i datum
             i++;
         }
-
+       Log.d("side2", "gtzf"  +dates.size());
         //usporedi datume i vidi koji je rođendan
         if(dates.size() >1 ) {
             try {
                 DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
                 Date tempDate = null;
                 Date tempDate1 = null;
+                dates.set(0, dates.get(0) + ".");
+                dates.set(1, dates.get(1) + ".");
                 tempDate = format.parse(dates.get(0));
                 tempDate1 = format.parse(dates.get(1));
+                Log.d("side2", "efe" + tempDate.toString()+ tempDate1.toString());
                 if (tempDate.before(tempDate1)) {
                     birthday = dates.get(0);
                     expireDate = dates.get(1);
@@ -580,9 +642,6 @@ public class DocumentFragment extends ListFragment {
         }
     }
 
-    private void arrangeDates(String s){
-
-    }
 
     private  String getDate(String desc, String type) {
         int count=0;
@@ -590,7 +649,7 @@ public class DocumentFragment extends ListFragment {
         String allMatches = new String();
         //desc = "19.01.1998.";
         //Matcher m = Pattern.compile("\\d\\d.\\d\\d.\\d\\d\\d\\d.").matcher(desc);
-        if(type.toLowerCase().equals("date")) m = Pattern.compile("[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}.").matcher(desc);
+        if(type.toLowerCase().equals("date")) m = Pattern.compile("[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}").matcher(desc);
         if(type.toLowerCase().equals("documentnumber")){
             m = Pattern.compile("[0-9]{9}").matcher(desc);
         }

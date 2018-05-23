@@ -20,42 +20,8 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/hr/rma/sl/textscanner/DocumentFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/hr/rma/sl/textscanner/DocumentFragment.java" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-32-49-403.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-32-49-403.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-33-05-175.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-33-05-175.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-33-40-195.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-33-40-195.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-33-54-654.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-33-54-654.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-38-19-110.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-38-19-110.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-39-05-052.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-39-05-052.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-42-24-844.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-16-42-24-844.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-18-31-48-791.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-18-31-48-791.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-18-32-42-645.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-18-32-42-645.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-31-41-806.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-31-41-806.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-31-50-075.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-31-50-075.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-48-45-257.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-48-45-257.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-53-49-927.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-53-49-927.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-57-10-831.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-57-10-831.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-57-26-898.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-22-57-26-898.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-23-01-51-549.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-03-28-23-01-51-549.rawproto" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-04-03-10-47-30-683.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-04-03-10-47-30-683.rawproto" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -81,12 +47,18 @@
       <file leaf-file-name="DocumentFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/hr/rma/sl/textscanner/DocumentFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="556" column="56" lean-forward="false" selection-start-line="556" selection-start-column="56" selection-end-line="556" selection-end-column="56" />
+            <state relative-caret-position="389">
+              <caret line="454" column="260" lean-forward="false" selection-start-line="454" selection-start-column="260" selection-end-line="454" selection-end-column="260" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#24082#24083#0" expanded="true" />
-                <element signature="e#24132#24133#0" expanded="true" />
+                <element signature="e#3798#4242#0" expanded="true" />
+                <element signature="e#4241#4242#0" expanded="true" />
+                <element signature="e#4286#4441#0" expanded="true" />
+                <element signature="e#4440#4441#0" expanded="true" />
+                <element signature="e#7321#7980#0" expanded="true" />
+                <element signature="e#7979#7980#0" expanded="true" />
+                <element signature="e#22962#22963#0" expanded="true" />
+                <element signature="e#23012#23013#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -95,7 +67,7 @@
       <file leaf-file-name="Document.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/hr/rma/sl/textscanner/Document.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
+            <state relative-caret-position="90">
               <caret line="13" column="24" lean-forward="false" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
               <folding />
             </state>
@@ -114,21 +86,21 @@
       </file>
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider editor-type-id="android-manifest">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
+            <state relative-caret-position="675">
               <caret line="45" column="58" lean-forward="false" selection-start-line="45" selection-start-column="58" selection-end-line="45" selection-end-column="58" />
               <folding />
             </state>
+          </provider>
+          <provider editor-type-id="android-manifest">
+            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
+            <state relative-caret-position="495">
               <caret line="33" column="64" lean-forward="false" selection-start-line="33" selection-start-column="64" selection-end-line="33" selection-end-column="64" />
               <folding />
             </state>
@@ -137,66 +109,66 @@
       </file>
       <file leaf-file-name="content_edit_document.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_edit_document.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="435">
               <caret line="29" column="46" lean-forward="false" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
               <folding />
             </state>
           </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
         </entry>
       </file>
       <file leaf-file-name="activity_edit_document.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_edit_document.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
         </entry>
       </file>
       <file leaf-file-name="app_bar.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
               <caret line="7" column="43" lean-forward="false" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
               <folding />
             </state>
           </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
         </entry>
       </file>
       <file leaf-file-name="content_document_list.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_document_list.xml">
-          <provider selected="true" editor-type-id="android-designer2">
-            <state />
-          </provider>
           <provider editor-type-id="text-editor">
             <state relative-caret-position="150">
               <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
               <folding />
             </state>
           </provider>
+          <provider selected="true" editor-type-id="android-designer2">
+            <state />
+          </provider>
         </entry>
       </file>
       <file leaf-file-name="fragment_document.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_document.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="525">
               <caret line="35" column="42" lean-forward="false" selection-start-line="35" selection-start-column="42" selection-end-line="35" selection-end-column="42" />
               <folding />
             </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
@@ -238,6 +210,7 @@
       <find>myObje</find>
       <find>OIB</find>
       <find>side2</find>
+      <find>check</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -2286,10 +2259,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2148" />
-    <option name="y" value="35" />
-    <option name="width" value="1717" />
-    <option name="height" value="965" />
+    <option name="x" value="1920" />
+    <option name="width" value="1920" />
+    <option name="height" value="1037" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -2308,26 +2280,11 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="ProjectPane" />
       <pane id="Scratches" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
-            <path>
-              <item name="TextScanner" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="TextScanner" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="TextScanner" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="textscanner" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
             <path>
               <item name="TextScanner" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
@@ -2535,7 +2492,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2148" y="35" width="1920" height="1037" extended-state="6" />
+    <frame x="1920" y="0" width="1920" height="1037" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2545,7 +2502,6 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34467617" sideWeight="0.5170758" order="12" side_tool="true" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -2567,6 +2523,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -2574,7 +2531,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -2592,8 +2551,14 @@
           <caret line="112" column="48" lean-forward="false" selection-start-line="112" selection-start-column="48" selection-end-line="112" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#24082#24083#0" expanded="true" />
-            <element signature="e#24132#24133#0" expanded="true" />
+            <element signature="e#3798#4242#0" expanded="true" />
+            <element signature="e#4241#4242#0" expanded="true" />
+            <element signature="e#4286#4441#0" expanded="true" />
+            <element signature="e#4440#4441#0" expanded="true" />
+            <element signature="e#7321#7980#0" expanded="true" />
+            <element signature="e#7979#7980#0" expanded="true" />
+            <element signature="e#22962#22963#0" expanded="true" />
+            <element signature="e#23012#23013#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2620,14 +2585,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_document.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="13" lean-forward="true" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
@@ -2657,24 +2622,24 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_share_text.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="36" column="37" lean-forward="false" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_document.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_document.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="25" column="35" lean-forward="false" selection-start-line="20" selection-start-column="2" selection-end-line="25" selection-end-column="35" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/documents.json">
@@ -2704,8 +2669,14 @@
           <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#24082#24083#0" expanded="true" />
-            <element signature="e#24132#24133#0" expanded="true" />
+            <element signature="e#3798#4242#0" expanded="true" />
+            <element signature="e#4241#4242#0" expanded="true" />
+            <element signature="e#4286#4441#0" expanded="true" />
+            <element signature="e#4440#4441#0" expanded="true" />
+            <element signature="e#7321#7980#0" expanded="true" />
+            <element signature="e#7979#7980#0" expanded="true" />
+            <element signature="e#22962#22963#0" expanded="true" />
+            <element signature="e#23012#23013#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2734,23 +2705,23 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_share_text.xml">
-      <provider editor-type-id="android-designer2">
+      <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_share_text.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="453">
           <caret line="53" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/hr/rma/sl/textscanner/dummy/DummyContent.java">
@@ -2786,13 +2757,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_main2.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="16" lean-forward="false" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="31" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/employee.json">
@@ -2803,33 +2774,33 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_share_text.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="38" lean-forward="false" selection-start-line="0" selection-start-column="38" selection-end-line="0" selection-end-column="38" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main2.xml">
-      <provider editor-type-id="android-designer2">
+      <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main2.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="42" lean-forward="false" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_share_text.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_share_text.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="44" lean-forward="false" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/documents.json">
@@ -2883,52 +2854,52 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_edit_document.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="29" column="46" lean-forward="false" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_edit_document.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_edit_document.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_document_list.xml">
-      <provider selected="true" editor-type-id="android-designer2">
+      <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_document_list.xml">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_document.xml">
-      <provider editor-type-id="android-designer2">
+      <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_document.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
           <caret line="35" column="42" lean-forward="false" selection-start-line="35" selection-start-column="42" selection-end-line="35" selection-end-column="42" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/hr/rma/sl/textscanner/Document.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
+        <state relative-caret-position="90">
           <caret line="13" column="24" lean-forward="false" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
           <folding />
         </state>
@@ -2944,42 +2915,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
+        <state relative-caret-position="495">
           <caret line="33" column="64" lean-forward="false" selection-start-line="33" selection-start-column="64" selection-end-line="33" selection-end-column="64" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
+        <state relative-caret-position="675">
           <caret line="45" column="58" lean-forward="false" selection-start-line="45" selection-start-column="58" selection-end-line="45" selection-end-column="58" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar.xml">
-      <provider editor-type-id="android-designer2">
+      <provider editor-type-id="android-manifest">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="43" lean-forward="false" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/hr/rma/sl/textscanner/DocumentFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="556" column="56" lean-forward="false" selection-start-line="556" selection-start-column="56" selection-end-line="556" selection-end-column="56" />
+        <state relative-caret-position="389">
+          <caret line="454" column="260" lean-forward="false" selection-start-line="454" selection-start-column="260" selection-end-line="454" selection-end-column="260" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#24082#24083#0" expanded="true" />
-            <element signature="e#24132#24133#0" expanded="true" />
+            <element signature="e#3798#4242#0" expanded="true" />
+            <element signature="e#4241#4242#0" expanded="true" />
+            <element signature="e#4286#4441#0" expanded="true" />
+            <element signature="e#4440#4441#0" expanded="true" />
+            <element signature="e#7321#7980#0" expanded="true" />
+            <element signature="e#7979#7980#0" expanded="true" />
+            <element signature="e#22962#22963#0" expanded="true" />
+            <element signature="e#23012#23013#0" expanded="true" />
           </folding>
         </state>
       </provider>

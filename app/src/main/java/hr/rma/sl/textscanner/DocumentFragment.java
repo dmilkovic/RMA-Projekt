@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.ContextCompat;
@@ -349,9 +350,10 @@ public class DocumentFragment extends ListFragment {
 
     //varijable za spremanje datuma
     String birthday = null, expireDate = null, dateOfIssue = null, OIB = null;
-    String ime = null, prezime = null, spol = null, address = null;
+    String ime = "", prezime = null, spol = null, address = null;
     String documentNumber = null;
     Boolean side2Flag=false;
+    int nameCnt = 0;
     private BaseTarget target2 = new BaseTarget<BitmapDrawable>() {
         @Override
         public void onResourceReady(BitmapDrawable bitmap, Transition<? super BitmapDrawable> transition) {
@@ -367,39 +369,25 @@ public class DocumentFragment extends ListFragment {
                 boolean surnameFlag = false, nameFlag = false, nameFlag1 = false;
                 for (int i = 0; i < textBlocks.size(); i++)
                 {
+
                     TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
                     imageText = textBlock.getValue();                   // return string
+                    Log.d("tag", "ovo je" + imageText);
                     // myText.append(imageText);
-                    if(imageText.contains("I0HRV") || imageText.contains("<")) continue;
-                   // if(imageText.contains("RH REPUBLIC REPUBLIKA OF HRVATSKA CROATIA")) continue;
-                   // imageText =  imageText.replaceAll("[a-z]", "");
-                    fullText += imageText;
-                    if(imageText.contains("Residence") || imageText.contains("identification")) side2Flag = true;
-
-                    if(imageText.contains("REPUBLIC OF CROATIA"))
+                    if(imageText.contains("I0HRV") || imageText.contains("<"))
                     {
-                        ime = imageText.substring(imageText.indexOf(("REPUBLIC OF CROATIA")) + "REPUBLIC OF CROATIA".length(),imageText.length());
-                        surnameFlag = true;
-                        continue;
-                        }
-                    if(imageText.contains("RH REPUBLIKA HRVATSKA"))
-                    {
-                        prezime = imageText.substring(imageText.indexOf(("RH REPUBLIKA HRVATSKA")) + "RH REPUBLIKA HRVATSKA".length(),imageText.length());
+                        side2Flag = true;
                         continue;
                     }
+                   // if(imageText.contains("RH REPUBLIC REPUBLIKA OF HRVATSKA CROATIA")) continue;
+                   // imageText =  imageText.replaceAll("[a-z]", "");
+                    if(imageText.contains("Residence") /*|| imageText.contains("identification")*/) side2Flag = true;
+
                     /*else if(imageText.contains("Ime/Name"))
                     {
                         nameFlag1 = true;
                         continue;
                     }
-
-                    if(nameFlag1)
-                    {
-                        ime = imageText;
-                        nameFlag1 = false;
-                        surnameFlag = true;
-                        continue;
-                    }*/
 
                   /* if(surnameFlag && !nameFlag)
                     {
@@ -407,29 +395,48 @@ public class DocumentFragment extends ListFragment {
                         nameFlag = true;
                         continue;
                     }*/
-                    if(imageText.contains("M/M"))
+                    if(!side2Flag)
                     {
-                        spol = imageText.substring(imageText.indexOf("M/M"),imageText.indexOf("M/M")+3);
-                    }else if(imageText.contains("Ž/F"))
-                    {
-                        spol = imageText.substring(imageText.indexOf("Ž/F"),imageText.indexOf("Ž/F")+3);
+                        if(imageText.contains("M/M"))
+                        {
+                            spol = imageText.substring(imageText.indexOf("M/M"),imageText.indexOf("M/M")+3);
+                        }else if(imageText.contains("Ž/F"))
+                        {
+                            spol = imageText.substring(imageText.indexOf("Ž/F"),imageText.indexOf("Ž/F")+3);
+                        }
+                        imageText = imageText.replaceAll("[A-Z][a-z]", "");
+                        imageText = imageText.replaceAll("[a-z]", "");
+                        imageText = imageText.replaceAll("OSOBNA", "");
+                        imageText = imageText.replaceAll("ISKAZNICA", "");
+                        imageText = imageText.replaceAll("REPUBLIC", "");
+                        imageText = imageText.replaceAll("REPUBLIKA", "");
+                        imageText = imageText.replaceAll("IDENTITY", "");
+                        imageText = imageText.replaceAll("DENTITY", "");
+                        imageText = imageText.replaceAll("CARD", "");
+                        imageText = imageText.replaceAll("HRVATSKA", "");
+                        imageText = imageText.replaceAll("CROATIA", "");
+                        imageText = imageText.replaceAll("\\bHRV\\b", "");
+                        imageText = imageText.replaceAll("\\bRH\\b", "");
+                        imageText = imageText.replaceAll("\\bOF\\b", "");
+                        imageText = imageText.replaceAll("/", "");
+                        String check = getDate(imageText, "name");
+                        if(check.length() > 2 && nameCnt<2)
+                        {
+                            Log.d("tag", "check:" + getDate(imageText, "name"));
+                            if(ime.contains(check)) continue;
+
+                            ime += " "+ getDate(imageText, "name");
+                            //nameCnt++;
+                        }
                     }
-
+                    fullText += imageText;
                     Log.d("tag", "Ovo je" + imageText + side2Flag);
-
                 }
                 //shareText.append(fullText);
                 /****Trebat ce ti kasnije!!!!!****
                  //   Intent intent = new Intent(getActivity(), ShareText.class);
                  //   intent.putExtra(EXTRA_MESSAGE, fullText);
                  //   startActivity(intent);*/
-                //int nameStart = fullText.indexOf("CROATIA");
-              //  int nameEnd = fullText.indexOf("/") - 1;
-             //   String name = fullText.substring(nameStart, nameEnd);
-             //   Log.d("ime", fullText);
-               // ime = fullText.substring((fullText.indexOf("CROATIA")+7),fullText.indexOf("Ime/Name"));
-             //fullText = fullText.replaceAll("HRV", "");
-
 
                 if(side2Flag)
                 {
@@ -441,7 +448,12 @@ public class DocumentFragment extends ListFragment {
                         getDates(fullText, "OIB");
                     }*/
                     getDates(fullText, "OIB");
-                    address = fullText.substring(fullText.indexOf("Residence")+"Residence".length(),fullText.indexOf("zdala"));
+                   // if(fullText.contains(fullText.substring(fullText.indexOf("Residence")+"Residence".length(), fullText.indexOf("zdala"))))
+                  if(fullText.indexOf("Residence") < fullText.indexOf("zdala"))
+                    {
+                        Log.d("tag", fullText.indexOf("Residence") +" "+ fullText.indexOf("zdala"));
+                        address = fullText.substring(fullText.indexOf("Residence")+"Residence".length(), fullText.indexOf("zdala")).replaceAll("[A-Z][a-z]", "").replaceAll("[a-z]", "").replaceAll(dateOfIssue+".", "").replaceAll(OIB, "").replaceAll("\bOIB\b", "");
+                    }
                     Log.d("side2", fullText + "***" + dateOfIssue + side2Flag + "**OIB: " + OIB + "** adresa:" + address);
                     //  Log.d("address", "adresa:" + address);
                 }
@@ -449,63 +461,28 @@ public class DocumentFragment extends ListFragment {
                     getDates(fullText, "date");
                     //   ime = fullText.substring((fullText.indexOf(expireDate)+11), fullText.length());
                     getDates(fullText, "documentnumber");
-                /*    fullText = fullText.replaceAll(birthday, "");
+                  /* fullText = fullText.replaceAll(birthday, "");
                     fullText = fullText.replaceAll(expireDate, "");
                     fullText = fullText.replaceAll(documentNumber, "");
-                    fullText = fullText.replaceAll(spol, "");*/
-                    Log.d("ime", fullText+ "\n **"+ birthday + "***** " +expireDate +"**"+ ime +" ** "+ prezime +" ** " + spol +"\n***" + documentNumber);
+                    fullText = fullText.replaceAll(spol, "");
+                    fullText = fullText.replaceAll("[A-Z][a-z]", "");
+                    fullText = fullText.replaceAll("[a-z]", "");
+                    fullText = fullText.replaceAll("OSOBNA", "");
+                    fullText = fullText.replaceAll("ISKAZNICA", "");
+
+                    fullText = fullText.replaceAll("REPUBLIC", "");
+                    fullText = fullText.replaceAll("REPUBLIKA", "");
+                    //fullText = fullText.replaceAll("OF", "");
+                    fullText = fullText.replaceAll("IDENTITY", "");
+                    fullText = fullText.replaceAll("CARD", "");
+                    fullText = fullText.replaceAll("HRVATSKA", "");
+                    fullText = fullText.replaceAll("CROATIA", "");
+                    fullText = fullText.replaceAll("\\bHRV\\b", "");
+                    fullText = fullText.replaceAll("\\bRH\\b", "");
+                    fullText = fullText.replaceAll("\\bOF\\b", "");
+                    fullText = fullText.replaceAll("/", "");*/
+                    Log.d("ime", fullText+ "\n **"+ birthday + "***** " +expireDate +"**"+ ime +" **** " + spol +"\n***" + documentNumber);
                 }
-
-              /*  fullText = fullText.replaceAll("OSOBNA", "");
-                fullText = fullText.replaceAll("ISKAZNICA", "");
-
-                fullText = fullText.replaceAll("REPUBLIC", "");
-                fullText = fullText.replaceAll("REPUBLIKA", "");
-                //fullText = fullText.replaceAll("OF", "");
-                fullText = fullText.replaceAll("IDENTITY", "");
-                fullText = fullText.replaceAll("CARD", "");
-                fullText = fullText.replaceAll("HRVATSKA", "");
-                fullText = fullText.replaceAll("CROATIA", "");
-                fullText = fullText.replaceAll("\\bHRV\\b", "");
-                fullText = fullText.replaceAll("\\bRH\\b", "");
-                fullText = fullText.replaceAll("\\bOF\\b", "");
-                fullText = fullText.replaceAll("[a-z]", "");
-                fullText = fullText.replaceAll("/", "");
-              /*  fullText = fullText.replaceAll("Identity", "");
-                fullText = fullText.replaceAll("card", "");
-                fullText = fullText.replaceAll("citizenship", "");
-                fullText = fullText.replaceAll("rodenja", "");
-                fullText = fullText.replaceAll("rođenja", "");
-                fullText = fullText.replaceAll("Potpis", "");
-                fullText = fullText.replaceAll("Signature", "");
-                fullText = fullText.replaceAll("Broj", "");
-                fullText = fullText.replaceAll("number", "");
-                fullText = fullText.replaceAll("Date", "");
-                fullText = fullText.replaceAll("Datum", "");
-                fullText = fullText.replaceAll("birth", "");
-                fullText = fullText.replaceAll("expiry", "");
-                fullText = fullText.replaceAll("Broj", "");
-                fullText = fullText.replaceAll("Prezime", "");
-                fullText = fullText.replaceAll("Surname", "");
-                fullText = fullText.replaceAll("Spol", "");
-                fullText = fullText.replaceAll("Sex", "");
-       /*         fullText = fullText.replaceAll("Ime/Name", "");
-                fullText = fullText.replaceAll("Prezime/Surname", "");
-                fullText = fullText.replaceAll("Potpis/Signature", "");
-              //  fullText = fullText.replaceAll("Date of expiry", "");
-                //  fullText = fullText.replaceAll("of", "");
-                //    fullText = fullText.replaceAll("identity", "");
-                //   fullText = fullText.replaceAll("card", "");
-               /* fullText = fullText.replaceAll("citizenship", "");
-                fullText = fullText.replaceAll("datum rodenja", "");
-                fullText = fullText.replaceAll("potpis", "");
-                fullText = fullText.replaceAll("signatur", "");
-                fullText = fullText.replaceAll("broj", "");
-                fullText = fullText.replaceAll("number", "");
-                fullText = fullText.replaceAll("m/m", "");
-                fullText = fullText.replaceAll("ž/f", "");*/
-             //   fullText = fullText.replaceAll("\\s","");
-             //   Log.d("ime", fullText+ "\n **"+ birthday + "***** " +expireDate +"**"+ ime +" ** "+ prezime +" ** " + spol +"\n***" + documentNumber);
             }
         }
         @Override
@@ -547,7 +524,7 @@ public class DocumentFragment extends ListFragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case EXTERNAL_MEMORY: {
                 // If request is cancelled, the result arrays are empty.
@@ -572,6 +549,7 @@ public class DocumentFragment extends ListFragment {
         List<String> dates = new ArrayList<>();
         int len = 10, i  = 0, cnt = 0;
         if(type.toLowerCase().equals("documentnumber")) len = 9;
+        if(type.toLowerCase().equals("oib")) len = 11;
         while(len+i <= fullText.length()) {
             String check = fullText.substring(i, len + i);
             //   if(check.contains(s1)) cnt++;
@@ -585,32 +563,35 @@ public class DocumentFragment extends ListFragment {
                 }*/
             if (type.equals("date")) {
                 date1 = getDate(check, "date");
-                if (getDate(check, "date").length() == 10) {
+                if (date1.length() == 10) {
                  //   Log.d("side2", "datum6" + getDate(check, "date") + dates.toString());
                     dates.add(date1);
                 }
             }
             else if(type.equals("documentnumber"))
             {
-                if(getDate(check, "documentnumber").length() == 9) {
-                    documentNumber = getDate(check, "documentnumber");
+                String str = getDate(check, "documentnumber");
+                if(str.length() == 9) {
+                    documentNumber = str;
                     return;
                 }
             }else if(type.equals("dateOfIssue")){
-                if(getDate(check, "date").length() == 10)
+                String str = getDate(check, "date");
+                if(str.length() == 10)
                 {
-                    Log.d("side2", "datum" + getDate(check, "date"));
-                    dateOfIssue = getDate(check, "date");
+                    //Log.d("side2", "datum" + getDate(check, "date"));
+                    dateOfIssue = str;
                     return;
                 }
             }else if(type.equals("OIB"))
             {
-                Log.d("side2", "check" + check);
-                Log.d("side2", "OIB" + getDate(check, "OIB"));
-                if(getDate(check, "OIB").length() == 11)
+               // Log.d("side2", "check" + check);
+               // Log.d("side2", "OIB" + getDate(check, "OIB"));
+                String str = getDate(check, "OIB");
+                if(str.length() == 11)
                 {
-                    Log.d("side2", "OIB" + getDate(check, "OIB"));
-                    OIB = getDate(check, "OIB");
+                    //Log.d("side2", "OIB" + getDate(check, "OIB"));
+                    OIB = str;
                     return;
                 }
             }
@@ -654,6 +635,7 @@ public class DocumentFragment extends ListFragment {
             m = Pattern.compile("[0-9]{9}").matcher(desc);
         }
         if(type.toLowerCase().equals("oib")) m = Pattern.compile("[0-9]{11}").matcher(desc);
+        if(type.toLowerCase().equals("name")) m = Pattern.compile("[A-Z]{3,}").matcher(desc);
 
         while (m.find()) {
             allMatches = m.group();

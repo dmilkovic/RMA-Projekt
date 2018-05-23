@@ -365,124 +365,23 @@ public class DocumentFragment extends ListFragment {
                 String imageText = "";
                 String fullText = "";
                 SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
-                //Log.d("tag" ,"Bitmapfsd" + bitmap.toString()+ " " +textBlocks);
-                boolean surnameFlag = false, nameFlag = false, nameFlag1 = false;
-                for (int i = 0; i < textBlocks.size(); i++)
+                DocumentRegex d = new DocumentRegex();
+                d.generateDocumentData(textBlocks);
+                if(d.getSide2Flag())
                 {
-
-                    TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
-                    imageText = textBlock.getValue();                   // return string
-                    Log.d("tag", "ovo je" + imageText);
-                    // myText.append(imageText);
-                    if(imageText.contains("I0HRV") || imageText.contains("<"))
-                    {
-                        side2Flag = true;
-                        continue;
-                    }
-                   // if(imageText.contains("RH REPUBLIC REPUBLIKA OF HRVATSKA CROATIA")) continue;
-                   // imageText =  imageText.replaceAll("[a-z]", "");
-                    if(imageText.contains("Residence") /*|| imageText.contains("identification")*/) side2Flag = true;
-
-                    /*else if(imageText.contains("Ime/Name"))
-                    {
-                        nameFlag1 = true;
-                        continue;
-                    }
-
-                  /* if(surnameFlag && !nameFlag)
-                    {
-                        prezime = imageText;
-                        nameFlag = true;
-                        continue;
-                    }*/
-                    if(!side2Flag)
-                    {
-                        if(imageText.contains("M/M"))
-                        {
-                            spol = imageText.substring(imageText.indexOf("M/M"),imageText.indexOf("M/M")+3);
-                        }else if(imageText.contains("Ž/F"))
-                        {
-                            spol = imageText.substring(imageText.indexOf("Ž/F"),imageText.indexOf("Ž/F")+3);
-                        }
-                        imageText = imageText.replaceAll("[A-Z][a-z]", "");
-                        imageText = imageText.replaceAll("[a-z]", "");
-                        imageText = imageText.replaceAll("OSOBNA", "");
-                        imageText = imageText.replaceAll("ISKAZNICA", "");
-                        imageText = imageText.replaceAll("REPUBLIC", "");
-                        imageText = imageText.replaceAll("REPUBLIKA", "");
-                        imageText = imageText.replaceAll("IDENTITY", "");
-                        imageText = imageText.replaceAll("DENTITY", "");
-                        imageText = imageText.replaceAll("CARD", "");
-                        imageText = imageText.replaceAll("HRVATSKA", "");
-                        imageText = imageText.replaceAll("CROATIA", "");
-                        imageText = imageText.replaceAll("\\bHRV\\b", "");
-                        imageText = imageText.replaceAll("\\bRH\\b", "");
-                        imageText = imageText.replaceAll("\\bOF\\b", "");
-                        imageText = imageText.replaceAll("/", "");
-                        String check = getDate(imageText, "name");
-                        if(check.length() > 2 && nameCnt<2)
-                        {
-                            Log.d("tag", "check:" + getDate(imageText, "name"));
-                            if(ime.contains(check)) continue;
-
-                            ime += " "+ getDate(imageText, "name");
-                            //nameCnt++;
-                        }
-                    }
-                    fullText += imageText;
-                    Log.d("tag", "Ovo je" + imageText + side2Flag);
-                }
-                //shareText.append(fullText);
-                /****Trebat ce ti kasnije!!!!!****
-                 //   Intent intent = new Intent(getActivity(), ShareText.class);
-                 //   intent.putExtra(EXTRA_MESSAGE, fullText);
-                 //   startActivity(intent);*/
-
-                if(side2Flag)
-                {
-                    getDates(fullText, "dateOfIssue");
-                   /* if(fullText.contains("Prebiv"))
-                    {
-                      //  if(fullText.indexOf("Prebiv") - 11 > -1) getDates((fullText.substring(fullText.indexOf("Prebiv") - 11, fullText.indexOf("Prebiv"))), "OIB");
-                        //if(fullText.contains("OIB/Personal identification number") || fullText.contains("OI8/Personal identification number") || fullText.contains("OIE/Personal identification number")|| fullText.contains("OIBPersonal identification number")) getDates(fullText.substring(fullText.indexOf("OIB/Personal identification number")+"OIB/Personal identification number".length(), fullText.length()), "OIB");
-                        getDates(fullText, "OIB");
-                    }*/
-                    getDates(fullText, "OIB");
-                   // if(fullText.contains(fullText.substring(fullText.indexOf("Residence")+"Residence".length(), fullText.indexOf("zdala"))))
-                  if(fullText.indexOf("Residence") < fullText.indexOf("zdala"))
-                    {
-                        Log.d("tag", fullText.indexOf("Residence") +" "+ fullText.indexOf("zdala"));
-                        address = fullText.substring(fullText.indexOf("Residence")+"Residence".length(), fullText.indexOf("zdala")).replaceAll("[A-Z][a-z]", "").replaceAll("[a-z]", "").replaceAll(dateOfIssue+".", "").replaceAll(OIB, "").replaceAll("\bOIB\b", "");
-                    }
-                    Log.d("side2", fullText + "***" + dateOfIssue + side2Flag + "**OIB: " + OIB + "** adresa:" + address);
-                    //  Log.d("address", "adresa:" + address);
-                }
-                else{
-                    getDates(fullText, "date");
-                    //   ime = fullText.substring((fullText.indexOf(expireDate)+11), fullText.length());
-                    getDates(fullText, "documentnumber");
-                  /* fullText = fullText.replaceAll(birthday, "");
-                    fullText = fullText.replaceAll(expireDate, "");
-                    fullText = fullText.replaceAll(documentNumber, "");
-                    fullText = fullText.replaceAll(spol, "");
-                    fullText = fullText.replaceAll("[A-Z][a-z]", "");
-                    fullText = fullText.replaceAll("[a-z]", "");
-                    fullText = fullText.replaceAll("OSOBNA", "");
-                    fullText = fullText.replaceAll("ISKAZNICA", "");
-
-                    fullText = fullText.replaceAll("REPUBLIC", "");
-                    fullText = fullText.replaceAll("REPUBLIKA", "");
-                    //fullText = fullText.replaceAll("OF", "");
-                    fullText = fullText.replaceAll("IDENTITY", "");
-                    fullText = fullText.replaceAll("CARD", "");
-                    fullText = fullText.replaceAll("HRVATSKA", "");
-                    fullText = fullText.replaceAll("CROATIA", "");
-                    fullText = fullText.replaceAll("\\bHRV\\b", "");
-                    fullText = fullText.replaceAll("\\bRH\\b", "");
-                    fullText = fullText.replaceAll("\\bOF\\b", "");
-                    fullText = fullText.replaceAll("/", "");*/
+                  dateOfIssue = d.getDateOfIssue();
+                  OIB = d.getOIB();
+                  address = d.getAddress();
+                  Log.d("side2", fullText + "***" + dateOfIssue + side2Flag + "**OIB: " + OIB + "** adresa:" + address);
+                }else{
+                    birthday = d.getBirthday();
+                    expireDate = d.getExpireDate();
+                    documentNumber = d.getDocumentNumber();
+                    ime = d.getIme();
+                    spol = d.getSpol();
                     Log.d("ime", fullText+ "\n **"+ birthday + "***** " +expireDate +"**"+ ime +" **** " + spol +"\n***" + documentNumber);
                 }
+
             }
         }
         @Override
@@ -543,106 +442,4 @@ public class DocumentFragment extends ListFragment {
         }
         // end of check permission
     }
-
-    private void getDates(String fullText, String type)
-    {
-        List<String> dates = new ArrayList<>();
-        int len = 10, i  = 0, cnt = 0;
-        if(type.toLowerCase().equals("documentnumber")) len = 9;
-        if(type.toLowerCase().equals("oib")) len = 11;
-        while(len+i <= fullText.length()) {
-            String check = fullText.substring(i, len + i);
-            //   if(check.contains(s1)) cnt++;
-            String date1 = new String();
-           /* if (type.equals("date")){
-                date1 = getDate(check, "date");
-                if(date1.length()==10)
-                {
-                    dates.add(date1);
-                    Log.d("ime", date1);
-                }*/
-            if (type.equals("date")) {
-                date1 = getDate(check, "date");
-                if (date1.length() == 10) {
-                 //   Log.d("side2", "datum6" + getDate(check, "date") + dates.toString());
-                    dates.add(date1);
-                }
-            }
-            else if(type.equals("documentnumber"))
-            {
-                String str = getDate(check, "documentnumber");
-                if(str.length() == 9) {
-                    documentNumber = str;
-                    return;
-                }
-            }else if(type.equals("dateOfIssue")){
-                String str = getDate(check, "date");
-                if(str.length() == 10)
-                {
-                    //Log.d("side2", "datum" + getDate(check, "date"));
-                    dateOfIssue = str;
-                    return;
-                }
-            }else if(type.equals("OIB"))
-            {
-               // Log.d("side2", "check" + check);
-               // Log.d("side2", "OIB" + getDate(check, "OIB"));
-                String str = getDate(check, "OIB");
-                if(str.length() == 11)
-                {
-                    //Log.d("side2", "OIB" + getDate(check, "OIB"));
-                    OIB = str;
-                    return;
-                }
-            }
-            //ima li string 11 znakova(koliko ima i datum
-            i++;
-        }
-       Log.d("side2", "gtzf"  +dates.size());
-        //usporedi datume i vidi koji je rođendan
-        if(dates.size() >1 ) {
-            try {
-                DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
-                Date tempDate = null;
-                Date tempDate1 = null;
-                dates.set(0, dates.get(0) + ".");
-                dates.set(1, dates.get(1) + ".");
-                tempDate = format.parse(dates.get(0));
-                tempDate1 = format.parse(dates.get(1));
-                Log.d("side2", "efe" + tempDate.toString()+ tempDate1.toString());
-                if (tempDate.before(tempDate1)) {
-                    birthday = dates.get(0);
-                    expireDate = dates.get(1);
-                } else {
-                    birthday = dates.get(1);
-                    expireDate = dates.get(0);
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-    private  String getDate(String desc, String type) {
-        int count=0;
-        Matcher m = null;
-        String allMatches = new String();
-        //desc = "19.01.1998.";
-        //Matcher m = Pattern.compile("\\d\\d.\\d\\d.\\d\\d\\d\\d.").matcher(desc);
-        if(type.toLowerCase().equals("date")) m = Pattern.compile("[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}").matcher(desc);
-        if(type.toLowerCase().equals("documentnumber")){
-            m = Pattern.compile("[0-9]{9}").matcher(desc);
-        }
-        if(type.toLowerCase().equals("oib")) m = Pattern.compile("[0-9]{11}").matcher(desc);
-        if(type.toLowerCase().equals("name")) m = Pattern.compile("[A-Z]{3,}").matcher(desc);
-
-        while (m.find()) {
-            allMatches = m.group();
-        }
-        return allMatches;
-    }
-
-
-
 }

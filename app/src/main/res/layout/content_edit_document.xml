@@ -42,7 +42,7 @@
             android:id="@+id/surnameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Surname:" />
+            android:text="Expire date:" />
 
         <Space
             android:layout_width="10dp"

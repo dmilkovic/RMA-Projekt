@@ -2,12 +2,15 @@ package hr.rma.sl.textscanner;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -16,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -175,10 +179,33 @@ public class DocumentFragment extends ListFragment {
             }
         });
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
                 // TODO Auto-generated method stub
                 Log.v("long clicked","pos: " + pos);
+                AlertDialog.Builder builder;
+                final int positionDoc = pos;
+                builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Brisanje dokumenta")
+                        .setMessage("Sigurno želite ukloniti ovaj dokument?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                myObjects.remove(positionDoc);
+                                contactList.clear();
+                                for (int i = 0; i < myObjects.size(); i++) {
+                                    contactList.add(myObjects.get(i).createHashMap());
+                                    Log.d("tag1", myObjects.toString());
+                                }
+                                overWrite();
+                                refreshAdapter();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .show();
                 return true;
             }
         });
@@ -452,4 +479,21 @@ public class DocumentFragment extends ListFragment {
         }
         // end of check permission
     }
+
+    private void overWrite()
+    {
+        String jsonInString = null;
+        try {
+            jsonInString = objectMapper.writeValueAsString(myObjects);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        create(getActivity(), jsonInString);
+        contactList.clear();
+        for (int i = 0; i < myObjects.size(); i++) {
+            contactList.add(myObjects.get(i).createHashMap());
+            Log.d("tag1", myObjects.toString());
+        }
+    }
+
 }

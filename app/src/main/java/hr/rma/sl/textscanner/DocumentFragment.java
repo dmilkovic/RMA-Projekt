@@ -16,22 +16,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -40,40 +33,26 @@ import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.transition.Transition;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.io.Writer;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
-import static hr.rma.sl.textscanner.MainActivity.EXTERNAL_MEMORY;
 
 
 public class DocumentFragment extends ListFragment {
@@ -180,8 +159,8 @@ public class DocumentFragment extends ListFragment {
     }
     private void refreshAdapter(){
         adapter = new SimpleAdapter(getActivity().getApplicationContext(), contactList,
-                R.layout.content_document_list, new String[]{"name", "surname", "birthday", "address", "OIB", "document number"},
-                new int[]{R.id.name, R.id.surname, R.id.birthday, R.id.address, R.id.OIB, R.id.document_number});
+                R.layout.content_document_list, new String[]{"name", "expireDate", "birthday", "address", "OIB", "document number", "sex", "dateOfIssue"},
+                new int[]{R.id.name, R.id.expireDate, R.id.birthday, R.id.address, R.id.OIB, R.id.document_number, R.id.sex, R.id.dateOfIssue});
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -193,6 +172,14 @@ public class DocumentFragment extends ListFragment {
                 appInfo.putExtra("pos", position);
                 startActivityForResult(appInfo, int_identifier);
                 Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, long id) {
+                // TODO Auto-generated method stub
+                Log.v("long clicked","pos: " + pos);
+                return true;
             }
         });
     }
@@ -367,11 +354,15 @@ public class DocumentFragment extends ListFragment {
                 SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
                 DocumentRegex d = new DocumentRegex();
                 d.generateDocumentData(textBlocks);
+                Document doc = new Document();
                 if(d.getSide2Flag())
                 {
                   dateOfIssue = d.getDateOfIssue();
                   OIB = d.getOIB();
                   address = d.getAddress();
+                  doc.setDateOfIssue(dateOfIssue);
+                  doc.setoib(OIB);
+                  doc.setAddress(address);
                   Log.d("side2", fullText + "***" + dateOfIssue + side2Flag + "**OIB: " + OIB + "** adresa:" + address);
                 }else{
                     birthday = d.getBirthday();
@@ -379,9 +370,28 @@ public class DocumentFragment extends ListFragment {
                     documentNumber = d.getDocumentNumber();
                     ime = d.getIme();
                     spol = d.getSpol();
+                    doc.setName(ime);
+                    doc.setBirthday(birthday);
+                    doc.setexpireDate(expireDate);
+                    doc.setGender(spol);
+                    doc.setDocumentNumber(documentNumber);
                     Log.d("ime", fullText+ "\n **"+ birthday + "***** " +expireDate +"**"+ ime +" **** " + spol +"\n***" + documentNumber);
                 }
-
+                myObjects.add(doc);
+                String jsonInString = null;
+                try {
+                    jsonInString = objectMapper.writeValueAsString(myObjects);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+                Log.d("tag1", "*****" + jsonInString);
+                create(getActivity(), jsonInString);
+                contactList.clear();
+                for (int i = 0; i < myObjects.size(); i++) {
+                    contactList.add(myObjects.get(i).createHashMap());
+                    Log.d("tag1", myObjects.toString());
+                }
+                refreshAdapter();
             }
         }
         @Override

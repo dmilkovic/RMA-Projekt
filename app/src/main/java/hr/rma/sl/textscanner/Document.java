@@ -19,15 +19,15 @@ public class Document implements Serializable{
     private String gender;
     private String birthday;
     private String dateOfIssue;
-    private String state;
+    private String expireDate;
     private String oib;
 
-    public String getState() {
-        return state;
+    public String getexpireDate() {
+        return expireDate;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setexpireDate(String expireDate) {
+        this.expireDate = expireDate;
     }
 
 
@@ -128,13 +128,15 @@ public class Document implements Serializable{
         HashMap<String, String> dokument = new HashMap<>();
 
         // adding each child node to HashMap key => value
-        dokument.put("id", this.getId());
-        dokument.put("name", "Name: " + this.getName());
-        dokument.put("surname", "Surname: " + this.getSurname());
-        dokument.put("birthday","Birthday: " + this.getBirthday());
-        dokument.put("address", "Address: " + this.getAddress());
-        dokument.put("document number", "Document number: " + this.getDocumentNumber());
+    //    dokument.put("id", this.getId());
+        dokument.put("name", "Ime: " + this.getName());
+        dokument.put("expireDate", "Vrijedi do: " + this.getexpireDate());
+        dokument.put("birthday","Datum rođenja: " + this.getBirthday());
+        dokument.put("address", "Prebivalište: " + this.getAddress());
+        dokument.put("document number", "Broj osobne iskaznice: " + this.getDocumentNumber());
         dokument.put("OIB", "OIB: " + this.getoib());
+        dokument.put("sex", "Spol: " + this.getGender());
+        dokument.put("dateOfIssue", "Datum izdavanja: " + dateOfIssue);
         return dokument;
     }
 }

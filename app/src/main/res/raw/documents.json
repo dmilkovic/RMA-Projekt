@@ -8,23 +8,23 @@
     "gender": "M/M",
     "birthday": "18.09.1992",
     "address": "Rijeka, Rijeka Dubovačka 2",
-    "state": "PU PRIMORSKO GORANSKA",
+    "dateOfIssue": "13.12.2016",
     "oib" : "25830658332",
-    "dateOfIssue": "13.12.2016"
-    },
-    {
-      "id": "2",
-      "name": "Dražen",
-      "surname":"Milković",
-      "documentNumber": "1129333111",
-      "validUntil": "`3.1.2021.",
-      "gender": "M/M",
-      "birthday": "18.09.1992",
-      "address": "Rijeka, Rijeka Dubovačka 2",
-      "state": "PU PRIMORSKO GORANSKA",
-      "oib" : "25830658332",
-      "dateOfIssue": "13.12.2016"
-    },
+    "expireDate": "13.12.2016"
+  },
+  {
+    "id": "2",
+    "name": "Dražen",
+    "surname":"Milković",
+    "documentNumber": "1129333111",
+    "validUntil": "`3.1.2021.",
+    "gender": "M/M",
+    "birthday": "18.09.1992",
+    "address": "Rijeka, Rijeka Dubovačka 2",
+    "dateOfIssue": "13.12.2016",
+    "oib" : "25830658332",
+    "expireDate": "13.12.2016"
+  },
   {
     "id": "3",
     "name": "Mark",
@@ -34,8 +34,10 @@
     "gender": "M/M",
     "birthday": "18.09.1992",
     "address": "Rijeka, Rijeka Dubovačka 2",
-    "state": "PU PRIMORSKO GORANSKA",
+    "dateOfIssue": "13.12.2016",
     "oib" : "25830658332",
-    "dateOfIssue": "13.12.2016"
+    "expireDate": "13.12.2016"
   }
 ]
+
+

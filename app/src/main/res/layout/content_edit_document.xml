@@ -39,7 +39,30 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/surnameLabel"
+            android:id="@+id/genderLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Spol:" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="43dp" />
+
+        <EditText
+            android:id="@+id/sex"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/expireDateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Expire date:" />
@@ -49,7 +72,30 @@
             android:layout_height="43dp" />
 
         <EditText
-            android:id="@+id/surname"
+            android:id="@+id/expireDate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dateOfIssueLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Datum izdavanja:" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="43dp" />
+
+        <EditText
+            android:id="@+id/dateOfIssue"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end" />
@@ -72,6 +118,28 @@
 
         <EditText
             android:id="@+id/birthday"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="0.1">
+
+        <TextView
+            android:id="@+id/document_numberLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Document Number:" />
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="43dp" />
+
+        <EditText
+            android:id="@+id/document_number"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end" />
@@ -121,25 +189,5 @@
             android:layout_gravity="end" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_weight="0.1">
 
-        <TextView
-            android:id="@+id/document_numberLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Document Number:" />
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="43dp" />
-
-        <EditText
-            android:id="@+id/document_number"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end" />
-    </LinearLayout>
 </LinearLayout>

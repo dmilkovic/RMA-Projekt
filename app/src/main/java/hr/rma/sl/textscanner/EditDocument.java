@@ -40,7 +40,7 @@ import java.util.Date;
 import java.util.List;
 
 public class EditDocument extends AppCompatActivity {
-    private EditText nameEditText, expireDateEditText, addressEditText, birthdayEditText, oibEditText, documentNumberEditText;
+    private EditText nameEditText, expireDateEditText, addressEditText, birthdayEditText, oibEditText, documentNumberEditText, dateOfIssueEditText, genderEditText;
     private Document document;
     private Intent intent;
     private int position;
@@ -60,11 +60,14 @@ public class EditDocument extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         nameEditText = findViewById(R.id.name);
-        expireDateEditText = findViewById(R.id.surname);
+        expireDateEditText = findViewById(R.id.expireDate);
         addressEditText = findViewById(R.id.address);
         birthdayEditText = findViewById(R.id.birthday);
         documentNumberEditText = findViewById(R.id.document_number);
+        dateOfIssueEditText = findViewById(R.id.dateOfIssue);
+        genderEditText = findViewById(R.id.sex);
         oibEditText = findViewById(R.id.OIB);
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         intent = getIntent();
@@ -77,7 +80,9 @@ public class EditDocument extends AppCompatActivity {
         oibEditText.setText(document.getoib());
         birthdayEditText.setText(document.getBirthday());
         addressEditText.setText(document.getAddress());
-        expireDateEditText.setText(document.getSurname());
+        expireDateEditText.setText(document.getexpireDate());
+        dateOfIssueEditText.setText(document.getDateOfIssue());
+        genderEditText.setText(document.getGender());
 
         Log.d("tag", "poruka:" + intent.getStringExtra("mess") + document.toString());
 
@@ -92,11 +97,14 @@ public class EditDocument extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 document.setName(nameEditText.getText().toString());
-                document.setSurname(expireDateEditText.getText().toString());
+                document.setexpireDate(expireDateEditText.getText().toString());
                 document.setBirthday(birthdayEditText.getText().toString());
                 document.setAddress(addressEditText.getText().toString());
                 document.setoib(oibEditText.getText().toString());
                 document.setDocumentNumber(documentNumberEditText.getText().toString());
+                document.setGender(genderEditText.getText().toString());
+                document.setDateOfIssue(dateOfIssueEditText.getText().toString());
+
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("doc", document);
                 intent.putExtras(bundle);
@@ -225,6 +233,7 @@ public class EditDocument extends AppCompatActivity {
                     address = d.getAddress();
                     oibEditText.setText(OIB);
                     addressEditText.setText(address);
+                    dateOfIssueEditText.setText(dateOfIssue);
                     Log.d("side2", fullText + "***" + dateOfIssue + side2Flag + "**OIB: " + OIB + "** adresa:" + address);
                 }else{
                     birthday = d.getBirthday();
@@ -236,6 +245,7 @@ public class EditDocument extends AppCompatActivity {
                     documentNumberEditText.setText(documentNumber);
                     birthdayEditText.setText(birthday);
                     expireDateEditText.setText(expireDate);
+                    genderEditText.setText(spol);
                     Log.d("ime", fullText+ "\n **"+ birthday + "***** " +expireDate +"**"+ ime +" **** " + spol +"\n***" + documentNumber);
                 }
             }

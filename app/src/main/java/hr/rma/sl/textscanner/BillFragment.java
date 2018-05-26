@@ -142,20 +142,20 @@ public class BillFragment extends ListFragment{
                     Bill bill = new Bill();
                     bill.setTotal("30");
                     // adding each child node to HashMap key => value
-                    BillItem b = new BillItem("Nutella", "40");
+                    BillItem b = new BillItem("Nutella", 40);
                     Log.d("tag", b.toString() + "  " + bill.toString());
                     bill.addItem(b);
-                    BillItem c = new BillItem("Kruh", "6");
+                    BillItem c = new BillItem("Kruh", 6);
                     Log.d("tag", b.toString() + "  " + bill.toString());
                     bill.addItem(c);
                     myObjects.add(bill);
                     bill = new Bill();
                     bill.setTotal("60");
                     // adding each child node to HashMap key => value
-                     b = new BillItem("Paprika", "4");
+                     b = new BillItem("Paprika", 4);
                     Log.d("tag", b.toString() + "  " + bill.toString());
                     bill.addItem(b);
-                    c = new BillItem("Mlijeko", "56");
+                    c = new BillItem("Mlijeko", 56);
                     Log.d("tag", b.toString() + "  " + bill.toString());
                     bill.addItem(c);
                     myObjects.add(bill);

@@ -24,6 +24,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -61,6 +62,8 @@ public class EditBill extends AppCompatActivity {
     String imageFileName;
     File photoFile = null;
     private ListView myList;
+    private TextView totalText;
+
     private MyAdapter myAdapter;
 
     @Override
@@ -77,29 +80,16 @@ public class EditBill extends AppCompatActivity {
         myList.setItemsCanFocus(true);
         myAdapter = new MyAdapter();
         myList.setAdapter(myAdapter);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Log.d("tag","Evo Kite u Billa:" + bill.toString() + "**" + bill.getItems().toString() + bill.getItems().size());
 
-      /*  nameEditText = findViewById(R.id.name);
-        expireDateEditText = findViewById(R.id.expireDate);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        intent = getIntent();
-        Bundle bundle = intent.getExtras();
-/*        document = (Document) bundle.getSerializable("doc");
-        position = intent.getIntExtra("pos", 0);
-
-        nameEditText.setText(document.getName());
-        expireDateEditText.setText(document.getexpireDate());
-
-        Log.d("tag", "poruka:" + intent.getStringExtra("mess") + document.toString());
-
-        //   DocumentFragment.setMyObject(document, position);
-
-       /* FloatingActionButton saveFab = (FloatingActionButton) findViewById(R.id.saveFab);
+        totalText = (TextView)findViewById(R.id.total);
+        myAdapter.setTotal();
+        final FloatingActionButton saveFab = (FloatingActionButton) findViewById(R.id.saveFab);
         FloatingActionButton cameraFab = (FloatingActionButton) findViewById(R.id.cameraFab);
         FloatingActionButton galleryFab = (FloatingActionButton) findViewById(R.id.galleryFab);
         saveFab.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +97,7 @@ public class EditBill extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                document.setName(nameEditText.getText().toString());
+               /* document.setName(nameEditText.getText().toString());
                 document.setexpireDate(expireDateEditText.getText().toString());
                 document.setBirthday(birthdayEditText.getText().toString());
                 Bundle bundle = new Bundle();
@@ -116,11 +106,12 @@ public class EditBill extends AppCompatActivity {
                 intent.putExtra("pos", position);
                 setResult(RESULT_OK, intent);
                 finish();
-                Log.d("tag", document.toString());
+                Log.d("tag", document.toString());*/
             }
         });
 
-        cameraFab.setOnClickListener(new View.OnClickListener() {
+
+       /* cameraFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view){
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -138,6 +129,7 @@ public class EditBill extends AppCompatActivity {
             }
         });*/
     }
+
     //obrada slike
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
@@ -319,14 +311,14 @@ public class EditBill extends AppCompatActivity {
         public ArrayList<ListItem> myItems = new ArrayList <ListItem>();
         public MyAdapter() {
             //ne znam zasto ali bez ovoga bi preskakao prvi element liste
-            ListItem listItem2 = new ListItem();
-            myItems.add(listItem2);
+           // ListItem listItem2 = new ListItem();
+           // myItems.add(listItem2);
             mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             for (int i = 0; i < bill.getItems().size(); i++) {
                 ListItem listItem = new ListItem();
                 listItem.name = bill.getItems().get(i).getName();
-                listItem.amount = bill.getItems().get(i).getAmount();
-                listItem.price = bill.getItems().get(i).getCost();
+                listItem.amount = String.valueOf(bill.getItems().get(i).getAmount());
+                listItem.price = String.valueOf(bill.getItems().get(i).getCost());
                 myItems.add(listItem);
              //   Log.d("broj", "i:" + i + bill.getItems().get(i).getName() + myItems.size());
             }
@@ -385,6 +377,7 @@ public class EditBill extends AppCompatActivity {
                         final int position = v.getId();
                         final EditText Caption = (EditText) v;
                         myItems.get(position).price = Caption.getText().toString();
+                        setTotal();
                     }
                 }
             });
@@ -395,10 +388,22 @@ public class EditBill extends AppCompatActivity {
                         final int position = v.getId();
                         final EditText Caption = (EditText) v;
                         myItems.get(position).amount = Caption.getText().toString();
+                        setTotal();
                     }
                 }
             });
             return convertView;
+        }
+
+        private void setTotal(){
+            double total = 0;
+            for(int i = 0; i < myItems.size(); i++)
+            {
+                total += Double.parseDouble(myItems.get(i).amount) * Double.parseDouble(myItems.get(i).price);
+                Log.d("total", "poz" + bill.getItems().get(i).getAmount() +" "+bill.getItems().get(i).getCost() + "" + total);
+            }
+            totalText.setText(String.valueOf(total));
+            Log.d("total", "poz" + total + bill.getItems().size());
         }
     }
 

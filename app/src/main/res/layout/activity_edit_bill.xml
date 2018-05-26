@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".EditBill">
 
     <android.support.design.widget.AppBarLayout
@@ -23,40 +24,70 @@
     <!--<include layout="@layout/content_edit_bill" /> -->
 
 
-    <ListView android:id="@+id/MyList" android:layout_height="wrap_content"
-        android:layout_width="match_parent" android:descendantFocusability="beforeDescendants">
-    </ListView>
+    <ListView
+        android:id="@+id/MyList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="beforeDescendants"/>
 
-    <!--<LinearLayout
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:orientation="horizontal"
-     android:layout_gravity="bottom|center"
-     android:id="@+id/buttonsLayout">
+    <LinearLayout
+        android:id="@+id/totalLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top"
+        android:layout_weight="1">
 
-  <android.support.design.widget.FloatingActionButton
-         android:id="@+id/galleryFab"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_gravity="bottom|end"
-         android:layout_margin="@dimen/fab_margin"
-         app:srcCompat="@android:drawable/ic_menu_gallery" />
+        <TextView
+            android:id="@+id/totalLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:layout_gravity="top|start"
+            android:text="Ukupno" />
 
-     <android.support.design.widget.FloatingActionButton
-         android:id="@+id/cameraFab"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_gravity="bottom|end"
-         android:layout_margin="@dimen/fab_margin"
-         app:srcCompat="@android:drawable/ic_menu_camera" />
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:text="drfgdgdrgdrgdrg" />
+    </LinearLayout>
 
-     <android.support.design.widget.FloatingActionButton
-         android:id="@+id/saveFab"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_gravity="bottom|end"
-         android:layout_margin="@dimen/fab_margin"
-         app:srcCompat="@android:drawable/ic_menu_save" />
+    <LinearLayout
+        android:id="@+id/buttonsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:orientation="horizontal"
+        android:layout_weight="1">
 
-    </LinearLayout> -->
-</android.support.design.widget.CoordinatorLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/galleryFab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/cameraFab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/saveFab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@android:drawable/ic_menu_save" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -4,14 +4,32 @@ import java.io.Serializable;
 
 public class BillItem implements Serializable {
     private String name;
-    private String cost;
-    private String amount;
+    private double cost;
+    private double amount;
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+
 
     protected BillItem(){
 
     }
 
-    protected BillItem(String name, String cost)
+    protected BillItem(String name, double cost)
     {
         this.name = name;
         this.cost = cost;
@@ -25,21 +43,7 @@ public class BillItem implements Serializable {
         this.name = name;
     }
 
-    public String getCost() {
-        return cost;
-    }
 
-    public void setCost(String cost) {
-        this.cost = cost;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
 
     public String toString(){
         return this.name + "**" + this.cost;

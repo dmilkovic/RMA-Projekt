@@ -13,6 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_weight="0.7"
+
             />
 
         <EditText
@@ -21,7 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.1"
-            android:text="Amount"/>
+            android:text="Amount"
+            android:inputType="numberDecimal"/>
 
         <EditText
             android:id="@+id/cost"
@@ -29,7 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_weight="0.2"
-            android:text="Price"/>
+            android:text="Price"
+            android:inputType="numberDecimal"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

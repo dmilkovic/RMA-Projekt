@@ -1,6 +1,8 @@
 package hr.rma.sl.textscanner;
 
-public class BillItem {
+import java.io.Serializable;
+
+public class BillItem implements Serializable {
     private String name;
     private String cost;
     private String amount;

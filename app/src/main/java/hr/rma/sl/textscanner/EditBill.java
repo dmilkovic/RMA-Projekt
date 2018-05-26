@@ -1,6 +1,7 @@
 package hr.rma.sl.textscanner;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -20,8 +21,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -42,13 +45,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 public class EditBill extends AppCompatActivity {
-    private EditText nameEditText, expireDateEditText;
-    private Document document;
     private Intent intent;
+    private Bill bill;
     private int position;
     final int REQUEST_TAKE_PHOTO = 1;
     final int PICK_IMAGE_REQUEST = 2;
@@ -57,59 +60,28 @@ public class EditBill extends AppCompatActivity {
     Uri photoURI = null;
     String imageFileName;
     File photoFile = null;
+    private ListView myList;
+    private MyAdapter myAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_bill);
-        View view = this.findViewById(android.R.id.content);
+        intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        bill = (Bill) bundle.getSerializable("bill");
+        position = intent.getIntExtra("pos", 0);
+
+        myList = (ListView) findViewById(R.id.MyList);
+        myList.setItemsCanFocus(true);
+        myAdapter = new MyAdapter();
+        myList.setAdapter(myAdapter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /*LinearLayout layout=(LinearLayout)view;
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
-                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        EditText edttext= new EditText(this);
-        edttext.setText("esf");
-        edttext.setLayoutParams(params);
-
-        layout.addView(edttext);*/
-
-
-        //Primjer generiranja i dodavanja UI elementa programski (NE putem xml-a):
-        LinearLayout myLL = findViewById(R.id.listaEditText);
-
-        for(int i = 0; i < 10; i++ )
-        {
-
-            LinearLayout newLL = new LinearLayout(this);
-            newLL.setOrientation(LinearLayout.HORIZONTAL);
-            newLL.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,   0.1f));
-
-            EditText edit1 = new EditText(this);
-            edit1.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.8f));
-            edit1.setText("Drugi r");
-
-            TextView textview1 = new TextView(this);
-            textview1.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            textview1.setText("Mario Jace");
-
-            Space space1 = new Space(this);
-            final float scale = this.getResources().getDisplayMetrics().density;
-            int pixelsHeight = (int) (10 * scale + 0.5f);
-            int pixelsWidth = (int) (43 * scale + 0.5f);
-            space1.setLayoutParams (new LinearLayout.LayoutParams(pixelsWidth, pixelsHeight));
-
-            newLL.addView(textview1);
-            newLL.addView(space1);
-            newLL.addView(edit1);
-            myLL.addView(newLL);
-        }
-
+        Log.d("tag","Evo Kite u Billa:" + bill.toString() + "**" + bill.getItems().toString() + bill.getItems().size());
 
       /*  nameEditText = findViewById(R.id.name);
         expireDateEditText = findViewById(R.id.expireDate);
@@ -339,5 +311,106 @@ public class EditBill extends AppCompatActivity {
             }
         }
         // end of check permission
+    }
+
+    //adapter za listu
+    public class MyAdapter extends BaseAdapter {
+        private LayoutInflater mInflater;
+        public ArrayList<ListItem> myItems = new ArrayList <ListItem>();
+        public MyAdapter() {
+            //ne znam zasto ali bez ovoga bi preskakao prvi element liste
+            ListItem listItem2 = new ListItem();
+            myItems.add(listItem2);
+            mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            for (int i = 0; i < bill.getItems().size(); i++) {
+                ListItem listItem = new ListItem();
+                listItem.name = bill.getItems().get(i).getName();
+                listItem.amount = bill.getItems().get(i).getAmount();
+                listItem.price = bill.getItems().get(i).getCost();
+                myItems.add(listItem);
+             //   Log.d("broj", "i:" + i + bill.getItems().get(i).getName() + myItems.size());
+            }
+            notifyDataSetChanged();
+        }
+
+        public int getCount() {
+            return myItems.size();
+        }
+
+        public Object getItem(int position) {
+            return position;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = mInflater.inflate(R.layout.item, null);
+                holder.name = (EditText) convertView
+                        .findViewById(R.id.name);
+                holder.price = (EditText) convertView
+                        .findViewById(R.id.cost);
+                holder.amount = (EditText) convertView
+                        .findViewById(R.id.amount);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            //Fill EditText with the value you have in data source
+            holder.name.setText(myItems.get(position).name);
+            holder.name.setId(position);
+            holder.price.setText(myItems.get(position).price);
+            holder.price.setId(position);
+            holder.amount.setText(myItems.get(position).amount);
+            holder.amount.setId(position);
+
+            //we need to update adapter once we finish with editing
+            holder.name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus){
+                        final int position = v.getId();
+                        final EditText Caption = (EditText) v;
+                        myItems.get(position).name = Caption.getText().toString();
+                    }
+                }
+            });
+
+            holder.price.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus){
+                        final int position = v.getId();
+                        final EditText Caption = (EditText) v;
+                        myItems.get(position).price = Caption.getText().toString();
+                    }
+                }
+            });
+
+            holder.amount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus){
+                        final int position = v.getId();
+                        final EditText Caption = (EditText) v;
+                        myItems.get(position).amount = Caption.getText().toString();
+                    }
+                }
+            });
+            return convertView;
+        }
+    }
+
+    class ViewHolder {
+        EditText name;
+        EditText price;
+        EditText amount;
+    }
+
+    class ListItem {
+        String name;
+        String price;
+        String amount;
     }
 }

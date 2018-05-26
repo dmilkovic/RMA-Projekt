@@ -138,16 +138,28 @@ public class BillFragment extends ListFragment{
                     myObjects = objectMapper.readValue(jsonData, new TypeReference<List<Document>>() {
                     });*/
 
+                    //testni podaci
                     Bill bill = new Bill();
                     bill.setTotal("30");
                     // adding each child node to HashMap key => value
                     BillItem b = new BillItem("Nutella", "40");
                     Log.d("tag", b.toString() + "  " + bill.toString());
                     bill.addItem(b);
-                    BillItem c = new BillItem("Nutella", "40");
+                    BillItem c = new BillItem("Kruh", "6");
                     Log.d("tag", b.toString() + "  " + bill.toString());
                     bill.addItem(c);
                     myObjects.add(bill);
+                    bill = new Bill();
+                    bill.setTotal("60");
+                    // adding each child node to HashMap key => value
+                     b = new BillItem("Paprika", "4");
+                    Log.d("tag", b.toString() + "  " + bill.toString());
+                    bill.addItem(b);
+                    c = new BillItem("Mlijeko", "56");
+                    Log.d("tag", b.toString() + "  " + bill.toString());
+                    bill.addItem(c);
+                    myObjects.add(bill);
+
                     Log.d("tag", myObjects.toString());
                     String jsonInString = objectMapper.writeValueAsString(myObjects);
 
@@ -175,10 +187,10 @@ public class BillFragment extends ListFragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent appInfo = new Intent(getActivity(), EditBill.class);
                 changeBill = myObjects.get(position);
-              /*  Bundle bundle = new Bundle();
-                bundle.putSerializable("doc", changeBill);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bill", changeBill);
                 appInfo.putExtras(bundle);
-                appInfo.putExtra("pos", position);*/
+                appInfo.putExtra("pos", position);
                 startActivityForResult(appInfo, int_identifier);
                 Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
             }

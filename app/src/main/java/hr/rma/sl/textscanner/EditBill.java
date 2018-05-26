@@ -52,6 +52,7 @@ import java.util.Date;
 import java.util.List;
 public class EditBill extends AppCompatActivity {
     private Intent intent;
+    public ArrayList<ListItem> myItems = new ArrayList <ListItem>();
     private Bill bill;
     private int position;
     final int REQUEST_TAKE_PHOTO = 1;
@@ -97,16 +98,25 @@ public class EditBill extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-               /* document.setName(nameEditText.getText().toString());
-                document.setexpireDate(expireDateEditText.getText().toString());
-                document.setBirthday(birthdayEditText.getText().toString());
+                bill = new Bill();
+                List <BillItem> itemsList  = new ArrayList<BillItem>();
+                for(int i = 0; i < myItems.size();i++)
+                {
+                    BillItem b = new BillItem();
+                    b.setName(myItems.get(i).name);
+                    b.setAmount(Double.parseDouble(myItems.get(i).amount));
+                    b.setCost(Double.parseDouble(myItems.get(i).price));
+                    itemsList.add(b);
+                }
+                bill.setItems(itemsList);
+                bill.setTotal(totalText.getText().toString());
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("doc", document);
+                bundle.putSerializable("bill", bill);
                 intent.putExtras(bundle);
                 intent.putExtra("pos", position);
                 setResult(RESULT_OK, intent);
                 finish();
-                Log.d("tag", document.toString());*/
+                Log.d("tag", bill.toString());
             }
         });
 
@@ -308,7 +318,6 @@ public class EditBill extends AppCompatActivity {
     //adapter za listu
     public class MyAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
-        public ArrayList<ListItem> myItems = new ArrayList <ListItem>();
         public MyAdapter() {
             //ne znam zasto ali bez ovoga bi preskakao prvi element liste
            // ListItem listItem2 = new ListItem();

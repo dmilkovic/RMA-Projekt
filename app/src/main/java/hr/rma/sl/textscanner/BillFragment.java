@@ -285,10 +285,10 @@ public class BillFragment extends ListFragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == int_identifier) {
             if (resultCode == RESULT_OK) {
-             /*   Bundle bundle = data.getExtras();
-                Document doc = (Document)bundle.getSerializable("doc");
+                Bundle bundle = data.getExtras();
+                Bill bill = (Bill)bundle.getSerializable("bill");
                 int position = data.getIntExtra("pos", 0);
-                myObjects.set(position, doc);
+                myObjects.set(position, bill);
                 String jsonInString = null;
                 try {
                     jsonInString = objectMapper.writeValueAsString(myObjects);
@@ -302,7 +302,7 @@ public class BillFragment extends ListFragment{
                     contactList.add(myObjects.get(i).createHashMap());
                     Log.d("tag1", myObjects.toString());
                 }
-                Log.d("tag3", doc.toString());*/
+                Log.d("tag3", bill.toString());
             }
             adapter.notifyDataSetChanged();
         }

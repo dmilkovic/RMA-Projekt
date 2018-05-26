@@ -49,6 +49,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="hr.rma.sl.textscanner.MainActivity" />
         </activity>
+        <activity
+            android:name=".EditBill"
+            android:label="@string/title_activity_edit_bill"
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="hr.rma.sl.textscanner.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

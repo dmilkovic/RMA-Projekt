@@ -24,4 +24,5 @@
         <item>Neptune</item>
     </string-array>
     <string name="title_activity_edit_document">EditDocument</string>
+    <string name="title_activity_edit_bill">EditBill</string>
 </resources>

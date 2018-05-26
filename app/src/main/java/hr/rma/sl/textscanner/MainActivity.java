@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity{
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentShareText(), "ShareText");
         adapter.addFragment(new DocumentFragment(), "Document Scanner");
-        adapter.addFragment(new FragmentShareText(), "Bills");
+        adapter.addFragment(new BillFragment(), "Bills");
         viewPager.setAdapter(adapter);
     }
 

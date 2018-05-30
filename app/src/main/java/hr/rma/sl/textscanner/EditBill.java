@@ -2,6 +2,7 @@ package hr.rma.sl.textscanner;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -17,16 +18,22 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -64,8 +71,8 @@ public class EditBill extends AppCompatActivity {
     File photoFile = null;
     private ListView myList;
     private TextView totalText;
-
     private MyAdapter myAdapter;
+    private ImageButton addItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +124,21 @@ public class EditBill extends AppCompatActivity {
                 setResult(RESULT_OK, intent);
                 finish();
                 Log.d("tag", bill.toString());
+            }
+        });
+        addItem = (ImageButton)findViewById(R.id.addItem);
+        addItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View view){
+                BillItem b = new BillItem("", 0 , 0);
+                ListItem listItem = new ListItem();
+                listItem.name = "";
+                listItem.amount = "0.0";
+                listItem.price = "0.0";
+                myItems.add(listItem);
+               // bill.addItem(new BillItem("", 0.0, 0.0));
+              //  myAdapter.setTotal();
+                myAdapter.notifyDataSetChanged();
             }
         });
 
@@ -346,8 +368,8 @@ public class EditBill extends AppCompatActivity {
             return position;
         }
 
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            final ViewHolder holder;
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = mInflater.inflate(R.layout.item, null);
@@ -357,6 +379,7 @@ public class EditBill extends AppCompatActivity {
                         .findViewById(R.id.cost);
                 holder.amount = (EditText) convertView
                         .findViewById(R.id.amount);
+                holder.deleteItem = (ImageButton)convertView.findViewById(R.id.deleteIten);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -368,6 +391,40 @@ public class EditBill extends AppCompatActivity {
             holder.price.setId(position);
             holder.amount.setText(myItems.get(position).amount);
             holder.amount.setId(position);
+            holder.deleteItem.setId(position);
+
+            holder.deleteItem.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    if(myItems.size() > 1)
+                    {
+                        myItems.remove(position);
+                        setTotal();
+                        notifyDataSetChanged();
+                    }else{
+                        AlertDialog.Builder builder;
+                        builder = new AlertDialog.Builder(EditBill.this);
+                        builder.setTitle("Brisanje računa")
+                                .setMessage("Sigurno želite ukloniti ovaj račun?")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("bill", null);
+                                        intent.putExtras(bundle);
+                                        intent.putExtra("pos", position);
+                                        setResult(RESULT_OK, intent);
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                    }
+                                }).show();
+                    }
+                 }
+            });
 
             //we need to update adapter once we finish with editing
             holder.name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -376,11 +433,12 @@ public class EditBill extends AppCompatActivity {
                         final int position = v.getId();
                         final EditText Caption = (EditText) v;
                         myItems.get(position).name = Caption.getText().toString();
+                        setTotal();
                     }
                 }
             });
 
-            holder.price.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+          holder.price.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus){
                         final int position = v.getId();
@@ -409,7 +467,6 @@ public class EditBill extends AppCompatActivity {
             for(int i = 0; i < myItems.size(); i++)
             {
                 total += Double.parseDouble(myItems.get(i).amount) * Double.parseDouble(myItems.get(i).price);
-                Log.d("total", "poz" + bill.getItems().get(i).getAmount() +" "+bill.getItems().get(i).getCost() + "" + total);
             }
             totalText.setText(String.valueOf(total));
             Log.d("total", "poz" + total + bill.getItems().size());
@@ -420,6 +477,7 @@ public class EditBill extends AppCompatActivity {
         EditText name;
         EditText price;
         EditText amount;
+        ImageButton deleteItem;
     }
 
     class ListItem {

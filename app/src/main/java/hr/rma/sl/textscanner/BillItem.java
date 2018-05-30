@@ -7,6 +7,7 @@ public class BillItem implements Serializable {
     private double cost;
     private double amount;
 
+
     public double getCost() {
         return cost;
     }
@@ -32,6 +33,13 @@ public class BillItem implements Serializable {
     protected BillItem(String name, double cost)
     {
         this.name = name;
+        this.cost = cost;
+    }
+
+    protected BillItem(String name, double amount, double cost)
+    {
+        this.name = name;
+        this.amount = amount;
         this.cost = cost;
     }
 

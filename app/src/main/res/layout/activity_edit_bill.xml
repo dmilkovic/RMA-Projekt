@@ -22,13 +22,50 @@
     </android.support.design.widget.AppBarLayout>
 
     <!--<include layout="@layout/content_edit_bill" /> -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top">
 
+        <TextView
+            android:id="@+id/nameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:layout_gravity="start"
+            android:text="Ime:" />
 
+        <TextView
+            android:id="@+id/kolicinaLabel"
+            android:layout_width="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:text="Količina" />
+
+        <TextView
+            android:id="@+id/cijenaLabel"
+            android:layout_width="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:text="Cijena u kn" />
+    </LinearLayout>
     <ListView
         android:id="@+id/MyList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:descendantFocusability="beforeDescendants"/>
+
+    <ImageButton
+        android:id="@+id/addItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        app:srcCompat="@android:drawable/ic_menu_add"
+        android:layout_gravity="top|end"
+        />
 
     <LinearLayout
         android:id="@+id/totalLayout"

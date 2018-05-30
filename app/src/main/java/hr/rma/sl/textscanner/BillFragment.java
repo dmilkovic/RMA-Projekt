@@ -69,7 +69,7 @@ public class BillFragment extends ListFragment{
     private ObjectMapper objectMapper;
     public Bill changeBill;
     private SimpleAdapter adapter;
-    ArrayList<HashMap<String, String>> contactList;
+    ArrayList<HashMap<String, String>> billList;
     //ocr
     //Bitmap bitmap;
     final int REQUEST_TAKE_PHOTO = 1;
@@ -84,7 +84,7 @@ public class BillFragment extends ListFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bill, container, false);
-        contactList = new ArrayList<>();
+        billList = new ArrayList<>();
         camButton = view.findViewById(R.id.camera_button);
         galleryButton = view.findViewById(R.id.galleryButton);
         camButton.setOnClickListener(new View.OnClickListener()
@@ -170,7 +170,7 @@ public class BillFragment extends ListFragment{
                 }
               }
             for (int i = 0; i < myObjects.size(); i++) {
-                contactList.add(myObjects.get(i).createHashMap());
+                billList.add(myObjects.get(i).createHashMap());
                 Log.d("tag1", myObjects.toString());
             }
         } catch (IOException e) {
@@ -179,7 +179,7 @@ public class BillFragment extends ListFragment{
         refreshAdapter();
     }
     private void refreshAdapter(){
-        adapter = new SimpleAdapter(getActivity().getApplicationContext(), contactList,
+        adapter = new SimpleAdapter(getActivity().getApplicationContext(), billList,
                 R.layout.content_bills_list, new String[]{"total"},
                 new int[]{R.id.total});
         lv.setAdapter(adapter);
@@ -195,22 +195,22 @@ public class BillFragment extends ListFragment{
                 Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
             }
         });
-      /*  lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+      lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
                 // TODO Auto-generated method stub
                 Log.v("long clicked","pos: " + pos);
                 AlertDialog.Builder builder;
-                final int positionDoc = pos;
+                final int positionBill = pos;
                 builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Brisanje dokumenta")
-                        .setMessage("Sigurno želite ukloniti ovaj dokument?")
+                builder.setTitle("Brisanje računa")
+                        .setMessage("Sigurno želite ukloniti ovaj račun?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
-                                myObjects.remove(positionDoc);
-                                contactList.clear();
+                                myObjects.remove(positionBill);
+                                billList.clear();
                                 for (int i = 0; i < myObjects.size(); i++) {
-                                    contactList.add(myObjects.get(i).createHashMap());
+                                    billList.add(myObjects.get(i).createHashMap());
                                     Log.d("tag1", myObjects.toString());
                                 }
                                 overWrite();
@@ -225,7 +225,7 @@ public class BillFragment extends ListFragment{
                         .show();
                 return true;
             }
-        });*/
+        });
     }
 
     //upravljanje json-om
@@ -286,9 +286,13 @@ public class BillFragment extends ListFragment{
         if (requestCode == int_identifier) {
             if (resultCode == RESULT_OK) {
                 Bundle bundle = data.getExtras();
-                Bill bill = (Bill)bundle.getSerializable("bill");
                 int position = data.getIntExtra("pos", 0);
-                myObjects.set(position, bill);
+                if((Bill)bundle.getSerializable("bill") != null) {
+                    Bill bill = (Bill) bundle.getSerializable("bill");
+                    myObjects.set(position, bill);
+                }else{
+                    myObjects.remove(position);
+                }
                 String jsonInString = null;
                 try {
                     jsonInString = objectMapper.writeValueAsString(myObjects);
@@ -297,12 +301,12 @@ public class BillFragment extends ListFragment{
                 }
                 Log.d("tag1", "*****" + jsonInString);
                 create(getActivity(), jsonInString);
-                contactList.clear();
+                billList.clear();
                 for (int i = 0; i < myObjects.size(); i++) {
-                    contactList.add(myObjects.get(i).createHashMap());
+                    billList.add(myObjects.get(i).createHashMap());
                     Log.d("tag1", myObjects.toString());
                 }
-                Log.d("tag3", bill.toString());
+                //Log.d("tag3", bill.toString());
             }
             adapter.notifyDataSetChanged();
         }
@@ -396,9 +400,10 @@ public class BillFragment extends ListFragment{
                 String imageText = "";
                 String fullText = "";
                 SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
-               // DocumentRegex d = new DocumentRegex();
+                BillRegex b = new BillRegex();
+                b.generateBillData(textBlocks);
                // d.generateDocumentData(textBlocks);
-                Bill b = new Bill();
+                //Bill b = new Bill();
                 /*if(d.getSide2Flag())
                 {
                     dateOfIssue = d.getDateOfIssue();
@@ -430,13 +435,15 @@ public class BillFragment extends ListFragment{
                 }
                 Log.d("tag1", "*****" + jsonInString);
                 create(getActivity(), jsonInString);
-                contactList.clear();
+                billList.clear();
                 for (int i = 0; i < myObjects.size(); i++) {
-                    contactList.add(myObjects.get(i).createHashMap());
+                    billList.add(myObjects.get(i).createHashMap());
                     Log.d("tag1", myObjects.toString());
                 }
                 refreshAdapter();*/
+                Log.d("tag", fullText);
             }
+
         }
         @Override
         public void getSize(SizeReadyCallback cb) {
@@ -506,9 +513,9 @@ public class BillFragment extends ListFragment{
             e.printStackTrace();
         }
         create(getActivity(), jsonInString);
-        contactList.clear();
+        billList.clear();
         for (int i = 0; i < myObjects.size(); i++) {
-            contactList.add(myObjects.get(i).createHashMap());
+            billList.add(myObjects.get(i).createHashMap());
             Log.d("tag1", myObjects.toString());
         }
     }

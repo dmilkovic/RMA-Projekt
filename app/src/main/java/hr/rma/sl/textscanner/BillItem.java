@@ -54,7 +54,7 @@ public class BillItem implements Serializable {
 
 
     public String toString(){
-        return this.name + "**" + this.cost;
+        return this.name + "**" + this.amount+ "**" +this.cost+"kn";
     }
 
 }

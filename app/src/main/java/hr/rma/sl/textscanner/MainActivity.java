@@ -26,6 +26,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -80,6 +81,8 @@ public class MainActivity extends AppCompatActivity{
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        //spusti tipkovnicu
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
        // myText = (TextView) findViewById(R.id.text_view);
         //bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sdf);

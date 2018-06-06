@@ -79,8 +79,6 @@ public class FragmentShareText extends Fragment {
      //   saveButton = getActivity().findViewById(R.id.saveButton);
      //   saveButton.setVisibility(View.INVISIBLE);
         View rootView = inflater.inflate(R.layout.fragment_share_text, container, false);
-        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
         // Inflate the layout for this fragment
         shareText = rootView.findViewById(R.id.shareText);
         ImageButton camButton = rootView.findViewById(R.id.camera_button);
@@ -161,7 +159,6 @@ public class FragmentShareText extends Fragment {
             }
         });*/
         Log.d("text", "pozvan je");
-
         return rootView;
     }
 

@@ -55,14 +55,15 @@
     <ListView
         android:id="@+id/MyList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:descendantFocusability="beforeDescendants"/>
+        android:layout_height="0px"
+        android:descendantFocusability="beforeDescendants"
+        android:dividerHeight="5dp"
+        android:layout_weight="9"/>
 
     <ImageButton
         android:id="@+id/addItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1"
         app:srcCompat="@android:drawable/ic_menu_add"
         android:layout_gravity="top|end"
         />
@@ -72,8 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="top"
-        android:layout_weight="1">
+        android:layout_gravity="top">
 
         <TextView
             android:id="@+id/totalLabel"
@@ -94,10 +94,10 @@
     <LinearLayout
         android:id="@+id/buttonsLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0px"
         android:layout_gravity="bottom|center"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_weight="2">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/galleryFab"

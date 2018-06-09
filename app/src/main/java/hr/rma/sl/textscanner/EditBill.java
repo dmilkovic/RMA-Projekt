@@ -52,6 +52,7 @@ import com.google.android.gms.vision.text.TextRecognizer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -256,8 +257,7 @@ public class EditBill extends AppCompatActivity {
 
                 BillRegex b = new BillRegex();
                 b.generateBillData(textBlocks);
-                Bill bill = new Bill();
-                bill = b.getBill();
+                Bill bill = b.getBill();
 
                /* DocumentRegex d = new DocumentRegex();
                 d.generateDocumentData(textBlocks);
@@ -385,7 +385,7 @@ public class EditBill extends AppCompatActivity {
                         .findViewById(R.id.cost);
                 holder.amount = (EditText) convertView
                         .findViewById(R.id.amount);
-                holder.deleteItem = (ImageButton)convertView.findViewById(R.id.deleteIten);
+                holder.deleteItem = (ImageButton)convertView.findViewById(R.id.deleteItem);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -474,7 +474,10 @@ public class EditBill extends AppCompatActivity {
             {
                 total += Double.parseDouble(myItems.get(i).amount) * Double.parseDouble(myItems.get(i).price);
             }
-            totalText.setText(String.valueOf(total));
+            String pattern = "#.##";
+            DecimalFormat decimalFormat = new DecimalFormat(pattern);
+            String format = decimalFormat.format(total);
+            totalText.setText(String.valueOf(format));
             Log.d("total", "poz" + total + bill.getItems().size());
         }
     }

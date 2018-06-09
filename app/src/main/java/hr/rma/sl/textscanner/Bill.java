@@ -16,7 +16,7 @@ public class Bill implements Serializable{
     public Bill()
     {
         this.setItems(null);
-        this.setTotal("0.0");
+      //  this.setTotal("0.0");
     }
     public Bill(List<BillItem> items, String total)
     {

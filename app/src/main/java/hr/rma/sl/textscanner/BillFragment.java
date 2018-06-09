@@ -152,7 +152,7 @@ public class BillFragment extends ListFragment{
                     bill = new Bill();
                     bill.setTotal("60");
                     // adding each child node to HashMap key => value
-                     b = new BillItem("Paprika", 4);
+                    b = new BillItem("Paprika", 4);
                     Log.d("tag", b.toString() + "  " + bill.toString());
                     bill.addItem(b);
                     c = new BillItem("Mlijeko", 56);
@@ -168,7 +168,7 @@ public class BillFragment extends ListFragment{
                 } else {
                     //show error or try again.
                 }
-              }
+            }
             for (int i = 0; i < myObjects.size(); i++) {
                 billList.add(myObjects.get(i).createHashMap());
                 Log.d("tag1", myObjects.toString());
@@ -195,7 +195,7 @@ public class BillFragment extends ListFragment{
                 Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
             }
         });
-      lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
                 // TODO Auto-generated method stub
                 Log.v("long clicked","pos: " + pos);
@@ -402,31 +402,9 @@ public class BillFragment extends ListFragment{
                 SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
                 BillRegex b = new BillRegex();
                 b.generateBillData(textBlocks);
-               // d.generateDocumentData(textBlocks);
-                //Bill b = new Bill();
-                /*if(d.getSide2Flag())
-                {
-                    dateOfIssue = d.getDateOfIssue();
-                    OIB = d.getOIB();
-                    address = d.getAddress();
-                    doc.setDateOfIssue(dateOfIssue);
-                    doc.setoib(OIB);
-                    doc.setAddress(address);
-                    Log.d("side2", fullText + "***" + dateOfIssue + side2Flag + "**OIB: " + OIB + "** adresa:" + address);
-                }else{
-                    birthday = d.getBirthday();
-                    expireDate = d.getExpireDate();
-                    documentNumber = d.getDocumentNumber();
-                    ime = d.getIme();
-                    spol = d.getSpol();
-                    doc.setName(ime);
-                    doc.setBirthday(birthday);
-                    doc.setexpireDate(expireDate);
-                    doc.setGender(spol);
-                    doc.setDocumentNumber(documentNumber);
-                    Log.d("ime", fullText+ "\n **"+ birthday + "***** " +expireDate +"**"+ ime +" **** " + spol +"\n***" + documentNumber);
-                }
-                myObjects.add(doc);
+                Bill bill = new Bill();
+                bill = b.getBill();
+                myObjects.add(bill);
                 String jsonInString = null;
                 try {
                     jsonInString = objectMapper.writeValueAsString(myObjects);
@@ -440,7 +418,7 @@ public class BillFragment extends ListFragment{
                     billList.add(myObjects.get(i).createHashMap());
                     Log.d("tag1", myObjects.toString());
                 }
-                refreshAdapter();*/
+                refreshAdapter();
                 Log.d("tag", fullText);
             }
 

@@ -13,6 +13,17 @@ public class Bill implements Serializable{
     private List<BillItem> items = new ArrayList<BillItem>();
     private String total;
 
+    public Bill()
+    {
+        this.setItems(null);
+        this.setTotal("0.0");
+    }
+    public Bill(List<BillItem> items, String total)
+    {
+        this.setItems(items);
+        this.setTotal(total);
+    }
+
     public void setItems(List<BillItem> items) {
         this.items = items;
     }

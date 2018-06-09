@@ -20,6 +20,7 @@ public class BillRegex {
     private String name, amount, price;
     private Boolean side2Flag=false;
     private int nameCnt = 0;
+    private Bill b;
 
     public void generateBillData(SparseArray<TextBlock> textBlocks){
         String imageText = "";
@@ -166,47 +167,13 @@ public class BillRegex {
         DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
         String format = decimalFormat.format(total);
+        b = new Bill(items, format);
         Log.d("item", "Ukupno: " + format);
         Log.d("racun", fullText + "PriceCnt:" + priceCnt + "AmountCnt:" +amountCnt);
     }
-/*
-    public String getBirthday() {
-        return birthday;
+
+    public Bill getBill() {
+        return b;
     }
 
-    public String getExpireDate() {
-        return expireDate;
-    }
-
-    public String getDateOfIssue() {
-        return dateOfIssue;
-    }
-
-    public String getOIB() {
-        return OIB;
-    }
-
-    public String getIme() {
-        return ime;
-    }
-
-    public String getSpol() {
-        return spol;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getDocumentNumber() {
-        return documentNumber;
-    }
-
-    public Boolean getSide2Flag() {
-        return side2Flag;
-    }
-
-    public int getNameCnt() {
-        return nameCnt;
-    }*/
 }

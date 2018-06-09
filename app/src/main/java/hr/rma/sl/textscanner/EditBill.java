@@ -136,8 +136,8 @@ public class EditBill extends AppCompatActivity {
                 listItem.amount = "0.0";
                 listItem.price = "0.0";
                 myItems.add(listItem);
-               // bill.addItem(new BillItem("", 0.0, 0.0));
-              //  myAdapter.setTotal();
+                // bill.addItem(new BillItem("", 0.0, 0.0));
+                //  myAdapter.setTotal();
                 myAdapter.notifyDataSetChanged();
             }
         });
@@ -253,6 +253,12 @@ public class EditBill extends AppCompatActivity {
                 String imageText = "";
                 String fullText = "";
                 SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
+
+                BillRegex b = new BillRegex();
+                b.generateBillData(textBlocks);
+                Bill bill = new Bill();
+                bill = b.getBill();
+
                /* DocumentRegex d = new DocumentRegex();
                 d.generateDocumentData(textBlocks);
                 if(d.getSide2Flag())
@@ -342,8 +348,8 @@ public class EditBill extends AppCompatActivity {
         private LayoutInflater mInflater;
         public MyAdapter() {
             //ne znam zasto ali bez ovoga bi preskakao prvi element liste
-           // ListItem listItem2 = new ListItem();
-           // myItems.add(listItem2);
+            // ListItem listItem2 = new ListItem();
+            // myItems.add(listItem2);
             mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             for (int i = 0; i < bill.getItems().size(); i++) {
                 ListItem listItem = new ListItem();
@@ -351,7 +357,7 @@ public class EditBill extends AppCompatActivity {
                 listItem.amount = String.valueOf(bill.getItems().get(i).getAmount());
                 listItem.price = String.valueOf(bill.getItems().get(i).getCost());
                 myItems.add(listItem);
-             //   Log.d("broj", "i:" + i + bill.getItems().get(i).getName() + myItems.size());
+                //   Log.d("broj", "i:" + i + bill.getItems().get(i).getName() + myItems.size());
             }
             notifyDataSetChanged();
         }
@@ -423,7 +429,7 @@ public class EditBill extends AppCompatActivity {
                                     }
                                 }).show();
                     }
-                 }
+                }
             });
 
             //we need to update adapter once we finish with editing
@@ -438,7 +444,7 @@ public class EditBill extends AppCompatActivity {
                 }
             });
 
-          holder.price.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            holder.price.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus){
                         final int position = v.getId();

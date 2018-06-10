@@ -66,7 +66,7 @@ public class BillRegex {
             Matcher m = p.matcher(imageText);
           //isto dio pokusaja da se slika veci dio racuna
            if(imageText.toLowerCase().contains("kn")) start = true;
-           if(start){
+           //if(start){
              /* if(imageText.contains("NovCanice")) nameFlag = false;
                 if(imageText.contains("Novčanice")) nameFlag = false;
               if(imageText.contains("Kartica")) nameFlag = false;
@@ -133,7 +133,7 @@ public class BillRegex {
                         }
                     }
            //     }
-           }
+           //}
         }
         double total = 0;
         for(int i = 0; i < items.size(); i++)

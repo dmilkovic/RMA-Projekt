@@ -243,7 +243,7 @@ public class FragmentShareText extends Fragment {
         }
         @Override
         public void getSize(SizeReadyCallback cb) {
-            cb.onSizeReady(1024, 720);
+            cb.onSizeReady(1440, 1080);
         }
         @Override
         public void removeCallback(SizeReadyCallback cb) {}

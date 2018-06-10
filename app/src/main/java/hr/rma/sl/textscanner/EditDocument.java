@@ -100,7 +100,7 @@ public class EditDocument extends AppCompatActivity {
                 String s ="Ime: " + nameEditText.getText().toString() + "\n";
                 s +="Spol: " + genderEditText.getText().toString() + "\n";
                 s +="Vrijedi do: " + expireDateEditText.getText().toString() + "\n";
-                s +="Datum izdaavanja: " + dateOfIssueEditText.getText().toString() + "\n";
+                s +="Datum izdavanja: " + dateOfIssueEditText.getText().toString() + "\n";
                 s +="Datum rođenja: " + birthdayEditText.getText().toString() + "\n";
                 s +="Broj dokumenta: " + documentNumberEditText.getText().toString() + "\n";
                 s +="Adresa: " + addressEditText.getText().toString() + "\n";

@@ -126,18 +126,6 @@ public class BillFragment extends ListFragment{
                 Log.d("myObjects","*Usao2*");
                 boolean isFileCreated = create(getActivity(), "{}");
                 if (isFileCreated) {
-                    //proceed with storing the first todo  or show ui
-                   /* InputStream is = getResources().openRawResource(R.raw.documents);
-                    int size = is.available();
-                    byte[] buffer = new byte[size];
-                    is.read(buffer);
-                    is.close();
-                    byte[] jsonData = new String(buffer, "UTF-8").getBytes();
-                    //    ObjectMapper objectMapper = new ObjectMapper();
-                    Log.d("tag", "tu sam");
-                    myObjects = objectMapper.readValue(jsonData, new TypeReference<List<Document>>() {
-                    });*/
-
                     //testni podaci
                     Bill bill = new Bill();
                     bill.setTotal("30");

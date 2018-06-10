@@ -144,7 +144,7 @@ public class EditBill extends AppCompatActivity {
         });
 
 
-       /* cameraFab.setOnClickListener(new View.OnClickListener() {
+       cameraFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view){
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -160,7 +160,7 @@ public class EditBill extends AppCompatActivity {
             public void onClick(View view) {
                 chooseFromGallery();
             }
-        });*/
+        });
     }
 
     //obrada slike
@@ -239,11 +239,6 @@ public class EditBill extends AppCompatActivity {
     }
 
     private BaseTarget target2 = new BaseTarget<BitmapDrawable>() {
-        //varijable za spremanje datuma
-        String birthday = null, expireDate = null, dateOfIssue = null, OIB = null;
-        String ime = "", prezime = null, spol = null, address = null;
-        String documentNumber = null;
-        Boolean side2Flag=false;
         @Override
         public void onResourceReady(BitmapDrawable bitmap, Transition<? super BitmapDrawable> transition) {
             // do something with the bitmap
@@ -257,32 +252,21 @@ public class EditBill extends AppCompatActivity {
 
                 BillRegex b = new BillRegex();
                 b.generateBillData(textBlocks);
-                Bill bill = b.getBill();
-
-               /* DocumentRegex d = new DocumentRegex();
-                d.generateDocumentData(textBlocks);
-                if(d.getSide2Flag())
-                {
-                    dateOfIssue = d.getDateOfIssue();
-                    OIB = d.getOIB();
-                    address = d.getAddress();
-                    oibEditText.setText(OIB);
-                    addressEditText.setText(address);
-                    dateOfIssueEditText.setText(dateOfIssue);
-                    Log.d("side2", fullText + "***" + dateOfIssue + side2Flag + "**OIB: " + OIB + "** adresa:" + address);
-                }else{
-                    birthday = d.getBirthday();
-                    expireDate = d.getExpireDate();
-                    documentNumber = d.getDocumentNumber();
-                    ime = d.getIme();
-                    spol = d.getSpol();
-                    nameEditText.setText(ime);
-                    documentNumberEditText.setText(documentNumber);
-                    birthdayEditText.setText(birthday);
-                    expireDateEditText.setText(expireDate);
-                    genderEditText.setText(spol);
-                    Log.d("ime", fullText+ "\n **"+ birthday + "***** " +expireDate +"**"+ ime +" **** " + spol +"\n***" + documentNumber);
-                }*/
+                bill = b.getBill();
+                myItems.clear();
+                for (int i = 0; i < bill.getItems().size(); i++) {
+                    ListItem listItem = new ListItem();
+                    listItem.name = bill.getItems().get(i).getName();
+                    listItem.amount = String.valueOf(bill.getItems().get(i).getAmount());
+                    listItem.price = String.valueOf(bill.getItems().get(i).getCost());
+                    myItems.add(listItem);
+                    //   Log.d("broj", "i:" + i + bill.getItems().get(i).getName() + myItems.size());
+                }
+                myAdapter.setTotal();
+                myAdapter.notifyDataSetChanged();
+                //myAdapter.notifyDataSetChanged();
+               // myAdapter = new MyAdapter();
+                //myList.setAdapter(myAdapter);
             }
         }
         @Override
@@ -347,9 +331,6 @@ public class EditBill extends AppCompatActivity {
     public class MyAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
         public MyAdapter() {
-            //ne znam zasto ali bez ovoga bi preskakao prvi element liste
-            // ListItem listItem2 = new ListItem();
-            // myItems.add(listItem2);
             mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             for (int i = 0; i < bill.getItems().size(); i++) {
                 ListItem listItem = new ListItem();

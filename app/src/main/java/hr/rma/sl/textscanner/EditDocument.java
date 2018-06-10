@@ -22,6 +22,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -88,30 +89,27 @@ public class EditDocument extends AppCompatActivity {
 
         //   DocumentFragment.setMyObject(document, position);
 
-        FloatingActionButton saveFab = (FloatingActionButton) findViewById(R.id.saveFab);
+        FloatingActionButton shareFab = (FloatingActionButton) findViewById(R.id.shareFab);
         FloatingActionButton cameraFab = (FloatingActionButton) findViewById(R.id.cameraFab);
         FloatingActionButton galleryFab = (FloatingActionButton) findViewById(R.id.galleryFab);
-        saveFab.setOnClickListener(new View.OnClickListener() {
+        ImageButton saveButton = (ImageButton) findViewById(R.id.saveButton);
+
+        shareFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                document.setName(nameEditText.getText().toString());
-                document.setexpireDate(expireDateEditText.getText().toString());
-                document.setBirthday(birthdayEditText.getText().toString());
-                document.setAddress(addressEditText.getText().toString());
-                document.setoib(oibEditText.getText().toString());
-                document.setDocumentNumber(documentNumberEditText.getText().toString());
-                document.setGender(genderEditText.getText().toString());
-                document.setDateOfIssue(dateOfIssueEditText.getText().toString());
+                String s ="Ime: " + nameEditText.getText().toString() + "\n";
+                s +="Spol: " + genderEditText.getText().toString() + "\n";
+                s +="Vrijedi do: " + expireDateEditText.getText().toString() + "\n";
+                s +="Datum izdaavanja: " + dateOfIssueEditText.getText().toString() + "\n";
+                s +="Datum rođenja: " + birthdayEditText.getText().toString() + "\n";
+                s +="Broj dokumenta: " + documentNumberEditText.getText().toString() + "\n";
+                s +="Adresa: " + addressEditText.getText().toString() + "\n";
+                s +="OIB: " + oibEditText.getText().toString() + "\n";
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("doc", document);
-                intent.putExtras(bundle);
-                intent.putExtra("pos", position);
-                setResult(RESULT_OK, intent);
-                finish();
-                Log.d("tag", document.toString());
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, s);
+                startActivity(Intent.createChooser(sharingIntent, getResources().getText(R.string.send_to)));
             }
         });
 
@@ -132,6 +130,29 @@ public class EditDocument extends AppCompatActivity {
                 chooseFromGallery();
             }
         });
+
+        saveButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                document.setName(nameEditText.getText().toString());
+                document.setexpireDate(expireDateEditText.getText().toString());
+                document.setBirthday(birthdayEditText.getText().toString());
+                document.setAddress(addressEditText.getText().toString());
+                document.setoib(oibEditText.getText().toString());
+                document.setDocumentNumber(documentNumberEditText.getText().toString());
+                document.setGender(genderEditText.getText().toString());
+                document.setDateOfIssue(dateOfIssueEditText.getText().toString());
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("doc", document);
+                intent.putExtras(bundle);
+                intent.putExtra("pos", position);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
     }
     //obrada slike
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

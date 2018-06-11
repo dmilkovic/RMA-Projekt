@@ -36,11 +36,6 @@
             android:value="ocr" />
 
         <activity
-            android:name=".ShareText"
-            android:label="@string/title_activity_share_text"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".EditDocument"
             android:label="@string/title_activity_edit_document"
             android:parentActivityName=".MainActivity"

@@ -89,21 +89,11 @@ public class DocumentRegex {
             fullText += imageText;
             Log.d("tag", "Ovo je" + imageText + side2Flag);
         }
-        //shareText.append(fullText);
-        /****Trebat ce ti kasnije!!!!!****
-         //   Intent intent = new Intent(getActivity(), ShareText.class);
-         //   intent.putExtra(EXTRA_MESSAGE, fullText);
-         //   startActivity(intent);*/
 
         if(side2Flag)
         {
             getDates(fullText, "dateOfIssue");
-           /* if(fullText.contains("Prebiv"))
-            {
-              //  if(fullText.indexOf("Prebiv") - 11 > -1) getDates((fullText.substring(fullText.indexOf("Prebiv") - 11, fullText.indexOf("Prebiv"))), "OIB");
-                //if(fullText.contains("OIB/Personal identification number") || fullText.contains("OI8/Personal identification number") || fullText.contains("OIE/Personal identification number")|| fullText.contains("OIBPersonal identification number")) getDates(fullText.substring(fullText.indexOf("OIB/Personal identification number")+"OIB/Personal identification number".length(), fullText.length()), "OIB");
-                getDates(fullText, "OIB");
-            }*/
+
             getDates(fullText, "OIB");
             // if(fullText.contains(fullText.substring(fullText.indexOf("Residence")+"Residence".length(), fullText.indexOf("zdala"))))
             if(fullText.indexOf("Residence") < fullText.indexOf("zdala"))
@@ -168,7 +158,6 @@ public class DocumentRegex {
             //ima li string 11 znakova(koliko ima i datum
             i++;
         }
-      //  Log.d("side2", "gtzf"  +dates.size() + dates.get(0) + dates.get(1));
         //usporedi datume i vidi koji je rođendan
         if(dates.size() >1 ) {
             try {

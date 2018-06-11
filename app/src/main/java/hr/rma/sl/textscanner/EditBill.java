@@ -137,8 +137,6 @@ public class EditBill extends AppCompatActivity {
                 listItem.amount = "0.0";
                 listItem.price = "0.0";
                 myItems.add(listItem);
-                // bill.addItem(new BillItem("", 0.0, 0.0));
-                //  myAdapter.setTotal();
                 myAdapter.notifyDataSetChanged();
             }
         });

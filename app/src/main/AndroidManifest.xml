@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustPan">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,6 +39,7 @@
 
         <activity
             android:name=".EditDocument"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_edit_document"
             android:parentActivityName=".MainActivity"
             android:configChanges="orientation|screenSize"
@@ -50,6 +53,7 @@
         <activity
             android:name=".EditBill"
             android:label="@string/title_activity_edit_bill"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar"
